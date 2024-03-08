@@ -4,7 +4,7 @@ const bodyParser = require("body-parser")
 const dotenv = require('dotenv').config()
 const userRoutes = require("./routes/user")
 const authRoutes = require("./routes/auth")
-const productRoutes = require("./routes/product")
+const projectRoutes = require("./routes/project")
 
 const cors = require("cors")
 app.use(cors());
@@ -22,6 +22,6 @@ app.use(`/${process.env.API_PATH}/users`,userRoutes);
 
 app.use(`/${process.env.API_PATH}/auth`,authRoutes);
 
-app.use(`/${process.env.API_PATH}/products`,productRoutes);
+app.use(`/${process.env.API_PATH}/projects`,projectRoutes);
 
 module.exports = app

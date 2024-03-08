@@ -11,7 +11,11 @@ const userSchema = mongoose.Schema({
     avatar: { type: String},
     email: { type: String, require: true, unique: true},
     password: { type: String, require: true },
-    rol: { type: String, default:"user"}
+    rol: { type: String, default:"user"},
+    userProjects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'project'
+    }]
 })
 
 module.exports = mongoose.model("User", userSchema);
