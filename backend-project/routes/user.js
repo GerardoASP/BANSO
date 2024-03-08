@@ -20,4 +20,11 @@ router.get("/:id", userController.getUser);
 /* http://localhost:3000/api/v1/users/get-user-by-email*/
 router.get("/get-user-by-email/:email",userController.getUserByEmail)
 
+//URL'S Adicionales
+/* http://localhost:3000/api/v1/users/addProjectToUser */
+router.put("/addProjectToUser", userController.addProject);
+
+/* http://localhost:3000/api/v1/users/1/projects */
+router.get('/:id/projects', userController.getProjectsOfUser);
+
 module.exports = router;
