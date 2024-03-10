@@ -1,0 +1,41 @@
+.user-view-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .main-content {
+    margin-top: 20px;
+  }
+  
+  .section {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .section-content {
+    margin-bottom: 20px;
+  }
+  
