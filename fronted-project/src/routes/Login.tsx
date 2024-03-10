@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import DefaultLayout from "../layout/DefaultLayout";
 import { useAuth } from "../auth/AuthProvider";
 import { Navigate } from "react-router-dom";
 import { AuthResponse, AuthResponseError } from "../types/types";
+import "./Login.css"; // Importar el archivo CSS
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -23,7 +24,6 @@ export default function Login() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // auth.setIsAuthenticated(true);
     try {
       const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",
@@ -46,30 +46,34 @@ export default function Login() {
       console.log(error);
     }
   }
+
   if (auth.isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
+
   return (
     <DefaultLayout>
-      <form onSubmit={handleSubmit} className="form">
-        <h1>Login</h1>
-        {!!errorResponse && <div className="errorMessage">{errorResponse}</div>}
-        <label>Username</label>
+      <form onSubmit={handleSubmit} className="form-container">
+        <h1 className="form-title">Login</h1>
+        {!!errorResponse && <div className="error-message">{errorResponse}</div>}
+        <label className="form-label">Username</label>
         <input
+          className="form-input"
           name="username"
           type="text"
           onChange={handleChange}
           value={username}
         />
-        <label>Password</label>
+        <label className="form-label">Password</label>
         <input
+          className="form-input"
           type="password"
           name="password"
           onChange={handleChange}
           value={password}
         />
 
-        <button>Login</button>
+        <button className="form-button">Login</button>
       </form>
     </DefaultLayout>
   );

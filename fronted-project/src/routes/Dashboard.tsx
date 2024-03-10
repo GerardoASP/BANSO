@@ -18,7 +18,7 @@ export default function Dashboard() {
   async function getTodos() {
     const accessToken = auth.getAccessToken();
     try {
-      const response = await fetch(`${API_URL}/posts`, {
+      const response = await fetch(`${API_URL}/projects`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +29,6 @@ export default function Dashboard() {
       if (response.ok) {
         const json = await response.json();
         setTodos(json);
-        console.log(json);
       }
     } catch (error) {
       console.log(error);
@@ -39,7 +38,7 @@ export default function Dashboard() {
   async function createTodo() {
     if (value.length > 3) {
       try {
-        const response = await fetch(`${API_URL}/posts`, {
+        const response = await fetch(`${API_URL}/projects`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -51,7 +50,45 @@ export default function Dashboard() {
           const todo = (await response.json()) as Todo;
           setTodos([...todos, todo]);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  async function deleteProject(id: string) {
+    try {
+      const accessToken = auth.getAccessToken();
+      const response = await fetch(`${API_URL}/projects/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (response.ok) {
+        setTodos(todos.filter((todo) => todo.id !== id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function updateProject(id: string, updatedData: any) {
+    try {
+      const accessToken = auth.getAccessToken();
+      const response = await fetch(`${API_URL}/projects/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+      if (response.ok) {
+        setTodos(todos.map((todo) => (todo.id === id ? { ...todo, ...updatedData } : todo)));
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -76,10 +113,12 @@ export default function Dashboard() {
             onChange={(e) => setValue(e.target.value)}
           />
         </form>
-        {todos.map((post: Todo) => (
-          <div key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.completed}</p>
+        {todos.map((project: Todo) => (
+          <div key={project.id}>
+            <h3>{project.title}</h3>
+            <p>{project.completed}</p>
+            <button onClick={() => deleteProject(project.id)}>Eliminar</button>
+            <button onClick={() => updateProject(project.id, { completed: !project.completed })}>Actualizar</button>
           </div>
         ))}
       </div>

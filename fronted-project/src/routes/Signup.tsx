@@ -1,8 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import DefaultLayout from "../layout/DefaultLayout";
 import { useAuth } from "../auth/AuthProvider";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { AuthResponse, AuthResponseError } from "../types/types";
+import "./Signup.css"; // Importar el archivo CSS
+
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -11,12 +13,22 @@ export default function Signup() {
   const [errorResponse, setErrorResponse] = useState("");
 
   const auth = useAuth();
-  const goTo = useNavigate();
 
-  async function handleSubmit(e: React.ChangeEvent<HTMLFormElement>) {
+  function handleChange(e: React.ChangeEvent) {
+    const { name, value } = e.target as HTMLInputElement;
+    if (name === "username") {
+      setUsername(value);
+    }
+    if (name === "password") {
+      setPassword(value);
+    }
+    if (name === "name") {
+      setName(value);
+    }
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log(username, password, name);
-
     try {
       const response = await fetch("http://localhost:3000/api/signup", {
         method: "POST",
@@ -26,10 +38,12 @@ export default function Signup() {
       if (response.ok) {
         const json = (await response.json()) as AuthResponse;
         console.log(json);
+
         setUsername("");
         setPassword("");
         setName("");
-        goTo("/");
+        // Redirigir al usuario a la página de inicio después del registro exitoso
+        <Navigate to="/" /> // Utiliza la función navigate para redirigir a la página de inicio
       } else {
         const json = (await response.json()) as AuthResponseError;
 
@@ -46,32 +60,35 @@ export default function Signup() {
 
   return (
     <DefaultLayout>
-      <form onSubmit={handleSubmit} className="form">
-        <h1>Signup</h1>
-        {!!errorResponse && <div className="errorMessage">{errorResponse}</div>}
-        <label>Name</label>
+      <form onSubmit={handleSubmit} className="form-container">
+        <h1 className="form-title">Signup</h1>
+        {!!errorResponse && <div className="error-message">{errorResponse}</div>}
+        <label className="form-label">Name</label>
         <input
-          type="text"
+          className="form-input"
           name="name"
-          onChange={(e) => setName(e.target.value)}
+          type="text"
+          onChange={handleChange}
           value={name}
         />
-        <label>Username</label>
+        <label className="form-label">Username</label>
         <input
+          className="form-input"
           type="text"
           name="username"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={handleChange}
           value={username}
         />
-        <label>Password</label>
+        <label className="form-label">Password</label>
         <input
+          className="form-input"
           type="password"
           name="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
           value={password}
         />
 
-        <button>Create account</button>
+        <button className="form-button">Create account</button>
       </form>
     </DefaultLayout>
   );
