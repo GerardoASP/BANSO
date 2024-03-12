@@ -1,0 +1,42 @@
+.dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info p {
+    margin-right: 10px;
+  }
+  
+  .dashboard-link {
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-right: 20px;
+  }
+  
+  .dashboard-link:hover {
+    color: #555;
+  }
+  
+  .profile-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .profile-button:hover {
+    background-color: #45a049;
+  }
+  
