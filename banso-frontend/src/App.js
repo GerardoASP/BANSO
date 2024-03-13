@@ -1,23 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import WelcomePage from './pages/WelcomePage/WelcomePage';
+import ProfilePage from './components/Profile/Profile';
+import ListUserPage from './pages/ListUserPage/ListUserPage';
+import ListProjectPage from './pages/ListProjectPage/ListProjectPage';
+import RegisterForm from './components/RegisterForm/RegisterForm';
+import LoginForm from './components/LoginForm/LoginForm';
+import RegisterProject from './components/RegisterProject/RegisterProject'
+import UpdateProjectForm from './components/UpdateProjectForm/UpdateProjectForm';
+import UpdateUserForm from './components/UpdateUserForm/UpdateUserForm';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<WelcomePage />}/>
+          <Route path="/profile" element={<ProfilePage />}/>
+          <Route path="/users" element={<ListUserPage />}/>
+          <Route path="/projects" element={<ListProjectPage />}/>
+          <Route path="/register" element={<RegisterForm />}/>
+          <Route path="/login" element={<LoginForm />}/>
+          <Route path="/register-project" element={<RegisterProject />}/>
+          <Route path="/update-project" element={<UpdateProjectForm />}/>
+          <Route path="/update-profile" element={<UpdateUserForm />}/>
+        </Routes>
+      </Router>
     </div>
   );
 }

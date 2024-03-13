@@ -1,0 +1,22 @@
+.gradient-custom {
+  background: #f6d365;
+  background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+  background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+}
+
+.card {
+  border-radius: 0.5rem;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-img-top {
+  width: 80px;
+  height: auto;
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+}
