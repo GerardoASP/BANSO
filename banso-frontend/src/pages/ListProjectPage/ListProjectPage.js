@@ -12,6 +12,25 @@ const ListProjectPage = () => {
       .then(data => setProjects(data));
   }, []);
 
+  const handleUpdate = (_id) =>{
+
+  }
+
+  async function handleDelete(_id){
+    try {
+        const response = await fetch(`http://localhost:3000/api/v1/projects/${_id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" }
+        });
+        if(response.status == 204){
+          console.log("Se pudo")
+        }else{
+          console.log("No se pudo")
+        }
+    }catch(error){
+      console.log(error);
+    }
+  }
   return (
     <div className='projects-view'>
       <h2>Lista de Proyectos</h2>
@@ -38,9 +57,9 @@ const ListProjectPage = () => {
                 </button>
               </td>
               <td>
-                <button>
-                    <DeleteIcon />
-                </button>
+              <button onClick={() => handleDelete(character._id)}>
+                <DeleteIcon />
+              </button>
               </td>
             </tr>
 ))

@@ -26,14 +26,20 @@ const Signup = () => {
     setUser({ ...user, [name]: value });
   };
 
+  const login = () => {
+    console.log('Di click en login');
+    window.location.href = '/login';
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://bansobackend-production.up.railway.app/api/v1/register", {
+      const response = await fetch("http://localhost:3000/api/v1/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
       });
+      console.log(user);
       if (response.ok) {
         const json = await response.json();
         setUser({
@@ -47,7 +53,7 @@ const Signup = () => {
           email: "",
           password: "",
         });
-        <Navigate to="/" />;
+        login()
       } else {
         const json = await response.json();
         setErrorResponse(json.body.error);
