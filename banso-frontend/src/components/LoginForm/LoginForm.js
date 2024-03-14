@@ -5,42 +5,65 @@ import './LoginForm.scss';
 
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
   const [errorResponse, setErrorResponse] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      // Aquí iría la lógica de autenticación
-      // Simplemente establecemos isAuthenticated en true para simular una autenticación exitosa
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.log(error);
-      setErrorResponse("Error de autenticación");
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const homeUser = () =>{
+    console.log('Di click en homeUser');
+    window.location.href = '/dashboard';
   }
 
-  if (isAuthenticated) {
-    // Redirigir al usuario si está autenticado
-    return <Navigate to="/dashboard" />;
-  }
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+        const json = await response.json();
+        setUser({
+          email: "",
+          password: "",
+        });
+        console.log("Felicidades Iniciaste Sesión")
+        homeUser()
+      } else {
+        console.log("No se puede iniciar sesión")
+        const json = await response.json();
+        setErrorResponse(json.body.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
       <div className="container">
-        <form onSubmit={handleSubmit} className="login-form">
+        <form className="login-form">
           <h1 className="form-title">Iniciar Sesión</h1>
           {!!errorResponse && <div className="error-message">{errorResponse}</div>}
           <div className="form-group">
-            <label className="form-label">Usuario</label>
+            <label className="form-label">Email</label>
             <input
               className="form-input"
-              name="username"
+              name="email"
               type="text"
-              onChange={(e) => setUsername(e.target.value)}
-              value={username}
+              onChange={handleChange}
+              value={user.email}
+              required
             />
           </div>
           <div className="form-group">
@@ -50,15 +73,16 @@ export default function Login() {
                 className="form-input"
                 type={showPassword ? "text" : "password"}
                 name="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
+                onChange={handleChange}
+                value={user.password}
+                required
               />
               <i className={`password-toggle-icon ${showPassword ? "fa fa-eye-slash" : "fa fa-eye"}`}
                 onClick={() => setShowPassword(!showPassword)}
               />
             </div>
           </div>
-          <button className="form-button" type="submit">Iniciar Sesión</button>
+          <button className="form-button" onClick={handleLogin} type="submit">Iniciar Sesión</button>
         </form>
       </div>
   );

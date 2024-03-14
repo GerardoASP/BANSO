@@ -9,6 +9,7 @@ import LoginForm from './components/LoginForm/LoginForm';
 import RegisterProject from './components/RegisterProject/RegisterProject'
 import UpdateProjectForm from './components/UpdateProjectForm/UpdateProjectForm';
 import UpdateUserForm from './components/UpdateUserForm/UpdateUserForm';
+import Dashboard from './pages/DashBoardPage/DashBoardPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register-project" element={<RegisterProject />}/>
           <Route path="/update-project" element={<UpdateProjectForm />}/>
           <Route path="/update-profile" element={<UpdateUserForm />}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
         </Routes>
       </Router>
     </div>

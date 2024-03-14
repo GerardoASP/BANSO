@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import './RegisterProject.scss';
 
-
-const paises = ["Colombia", "Argentina", "Perú", "México", "Chile"];
-const departamentos = ["Caldas", "Antioquia", "Valle del Cauca", "Bogotá DC", "Santander"];
-const municipios = ["Manizales", "Medellín", "Cali", "Bogotá", "Bucaramanga"];
-
 const CrearProyecto = () => {
   const [proyecto, setProyecto] = useState({
-    nombre: "",
-    estado: "",
-    fechaInicio: "",
-    descripcion: "",
+    nameProject: "",
+    state: "",
+    dateStart: "",
+    descriptionProject: "",
   });
   const [error, setError] = useState("");
   const [enviado, setEnviado] = useState(false);
@@ -24,10 +19,10 @@ const CrearProyecto = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setEnviado(true);
+    //setEnviado(true);
 
     // Validación del formulario
-    if (!proyecto.nombre || !proyecto.estado || !proyecto.fechaInicio || !proyecto.descripcion) {
+    if (!proyecto.nameProject || !proyecto.state || !proyecto.dateStart || !proyecto.descriptionProject) {
       setError("Por favor completa todos los campos requeridos.");
       return;
     }
@@ -35,15 +30,25 @@ const CrearProyecto = () => {
     try {
       // Aquí iría la lógica para enviar los datos del proyecto al servidor
       // Por ahora, simplemente reiniciamos el estado del proyecto
-      setProyecto({
-        nombre: "",
-        estado: "",
-        fechaInicio: "",
-        descripcion: "",
+      const response = await fetch("http://localhost:3000/api/v1/projects/new-project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(proyecto),
       });
-      setEnviado(false);
-      setError("");
-      <Navigate to="/" />;
+      console.log(proyecto);
+      if (response.ok) {
+        const json = await response.json();
+        setProyecto({
+          nameProject: "",
+          state: "",
+          dateStart: "",
+          descriptionProject: ""
+        });
+        console.log("Felicidades Creaste un proyecto")
+      } else {
+        const json = await response.json();
+        setError(json.body.error);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -57,43 +62,43 @@ const CrearProyecto = () => {
         <div className="grupo-formulario">
           <label className="etiqueta">Nombre del Proyecto *</label>
           <input
-            className={`entrada-formulario ${enviado && !proyecto.nombre && 'error'}`}
+            className={`entrada-formulario ${enviado && !proyecto.nameProject && 'error'}`}
             type="text"
-            name="nombre"
+            name="nameProject"
             onChange={handleChange}
-            value={proyecto.nombre}
+            value={proyecto.nameProject}
             required
           />
         </div>
         <div className="grupo-formulario">
           <label className="etiqueta">Estado *</label>
           <input
-            className={`entrada-formulario ${enviado && !proyecto.estado && 'error'}`}
+            className={`entrada-formulario ${enviado && !proyecto.state && 'error'}`}
             type="text"
-            name="estado"
+            name="state"
             onChange={handleChange}
-            value={proyecto.estado}
+            value={proyecto.state}
             required
           />
         </div>
         <div className="grupo-formulario">
           <label className="etiqueta">Fecha de Inicio *</label>
           <input
-            className={`entrada-formulario ${enviado && !proyecto.fechaInicio && 'error'}`}
+            className={`entrada-formulario ${enviado && !proyecto.dateStart && 'error'}`}
             type="date"
-            name="fechaInicio"
+            name="dateStart"
             onChange={handleChange}
-            value={proyecto.fechaInicio}
+            value={proyecto.dateStart}
             required
           />
         </div>
         <div className="grupo-formulario">
           <label className="etiqueta">Descripción *</label>
           <textarea
-            className={`entrada-formulario ${enviado && !proyecto.descripcion && 'error'}`}
-            name="descripcion"
+            className={`entrada-formulario ${enviado && !proyecto.descriptionProject && 'error'}`}
+            name="descriptionProject"
             onChange={handleChange}
-            value={proyecto.descripcion}
+            value={proyecto.descriptionProject}
             required
           ></textarea>
         </div>
