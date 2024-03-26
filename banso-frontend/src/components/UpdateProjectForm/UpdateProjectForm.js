@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./UpdateProjectForm.scss";
-
+import { useLocation } from "react-router-dom";
 const projectStates = ["En formulación", "En proceso", "Finalizado", "En revisión"];
 
 const UpdateProjectForm = () => {
+  const location = useLocation();
+  const [myQueryParam,setMyQueryParam] = useState('');
+  useEffect(() => {
+    // Parse the query parameters from the search string
+    const params = new URLSearchParams(location.search);
+    
+    // Get the value of the query parameter you're interested in
+    const myQueryParam = params.get('id');
+    setMyQueryParam(myQueryParam);
+    // Do something with the query parameter value
+    console.log('My query parameter value:', myQueryParam);
+  }, [location]);
+
   const [projectData, setProjectData] = useState({
     nameProject: "",
     state: "",
@@ -17,22 +30,39 @@ const UpdateProjectForm = () => {
     setProjectData({ ...projectData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setErrorMessage("");
+
+    // Validación del formulario
     if (!projectData.nameProject || !projectData.state || !projectData.dateStart || !projectData.descriptionProject) {
       setErrorMessage("Por favor complete todos los campos.");
       return;
     }
-    // Aquí puedes enviar los datos del proyecto a tu servidor o hacer lo que desees con ellos
-    console.log("Datos del proyecto:", projectData);
-    // Limpiar el formulario después del envío
-    setProjectData({
-      nameProject: "",
-      state: "",
-      dateStart: "",
-      descriptionProject: "",
-    });
-    setErrorMessage("");
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/v1/projects/update-project/${myQueryParam}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(projectData),
+      });
+      
+      if (response.ok) {
+        const json = await response.json();
+        setProjectData({
+          nameProject: "",
+          state: "",
+          dateStart: "",
+          descriptionProject: ""
+        });
+        console.log("Felicidades, has actualizado un proyecto.");
+      } else {
+        const json = await response.json();
+        setErrorMessage(json.body.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

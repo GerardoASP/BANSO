@@ -18,8 +18,8 @@ const ListUserPage = () => {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nombre</th>
+            <th>Apellido</th>
             <th>Email</th>
           </tr>
         </thead>
@@ -27,8 +27,8 @@ const ListUserPage = () => {
           {users && users.length > 0 ? (
           users.map((character) => (
 	<tr key={character._id}>
-              <td>{character._id}</td>
               <td>{character.firstname}</td>
+              <td>{character.lastname}</td>
               <td>{character.email}</td>
             </tr>
 ))

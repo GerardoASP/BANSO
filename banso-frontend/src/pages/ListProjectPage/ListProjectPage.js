@@ -12,8 +12,15 @@ const ListProjectPage = () => {
       .then(data => setProjects(data));
   }, []);
 
-  const handleUpdate = (_id) =>{
+  const UpdateFormProject = (_id) =>{
+    console.log('Di click en UpdateFormProject');
+    window.location.href = `/update-project?id=${_id}`;
+  }
 
+  const handleUpdate = (_id) =>{
+    const projectId = _id
+    UpdateFormProject(projectId)
+    console.log(projectId)
   }
 
   async function handleDelete(_id){
@@ -53,7 +60,7 @@ const ListProjectPage = () => {
               <td>{character.descriptionProject}</td>
               <td>
                 <button>
-                    <EditIcon />
+                    <EditIcon onClick={()=> handleUpdate(character._id)}/>
                 </button>
               </td>
               <td>
