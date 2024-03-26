@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
-import './RegisterForm.scss';
+import { Link } from "react-router-dom";
+import "./RegisterForm.scss";
 
+const departments = [
+  "Ingeniería de Sistemas",
+  "Ingeniería Mecánica",
+  "Ingeniería Biomédica",
+  "Ingeniería Industrial",
+];
 
-const countries = ["Colombia", "Argentina", "Perú", "México", "Chile"];
-const departments = ["Caldas", "Antioquia", "Valle del Cauca", "Bogotá DC", "Santander"];
-const municipalities = ["Manizales", "Medellín", "Cali", "Bogotá", "Bucaramanga"];
-
-const Signup = () => {
+const RegisterForm = () => {
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
-    country: "",
     department: "",
-    municipality: "",
-    document_type: "",
-    document: "",
     email: "",
     password: "",
   });
@@ -26,87 +24,39 @@ const Signup = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const login = () => {
-    console.log('Di click en login');
-    window.location.href = '/login';
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/api/v1/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
-      console.log(user);
-      if (response.ok) {
-        const json = await response.json();
-        setUser({
-          firstname: "",
-          lastname: "",
-          country: "",
-          department: "",
-          municipality: "",
-          document_type: "",
-          document: "",
-          email: "",
-          password: "",
-        });
-        login()
-      } else {
-        const json = await response.json();
-        setErrorResponse(json.body.error);
-      }
+      console.log("Usuario registrado:", user);
     } catch (error) {
-      console.log(error);
+      console.error("Error al registrar usuario:", error);
     }
   };
 
   return (
-    <div className="container" style={{ textAlign: 'center', marginTop: '50px' }}>
+    <div className="container">
       <form onSubmit={handleSubmit} className="form-container">
-        <h1 className="form-title">Signup</h1>
-        {!!errorResponse && <div className="error-message" style={{ color: 'red' }}>{errorResponse}</div>}
-        <div className="form-group">
-          <label className="form-label">First Name</label>
-          <input
-            className="form-input"
-            type="text"
-            name="firstname"
-            onChange={handleChange}
-            value={user.firstname}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label">Last Name</label>
-          <input
-            className="form-input"
-            type="text"
-            name="lastname"
-            onChange={handleChange}
-            value={user.lastname}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label">Country</label>
-          <select
-            className="form-input"
-            name="country"
-            onChange={handleChange}
-            value={user.country}
-            required
-          >
-            <option value="">Select Country</option>
-            {countries.map((country, index) => (
-              <option key={index} value={country}>{country}</option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label className="form-label">Department</label>
+        <h1 className="form-title">Registro</h1>
+        {!!errorResponse && <div className="error-message">{errorResponse}</div>}
+        <input
+          className="form-input"
+          type="text"
+          name="firstname"
+          placeholder="Nombres"
+          onChange={handleChange}
+          value={user.firstname}
+          required
+        />
+        <input
+          className="form-input"
+          type="text"
+          name="lastname"
+          placeholder="Apellidos"
+          onChange={handleChange}
+          value={user.lastname}
+          required
+        />
+        <div className="select-container">
           <select
             className="form-input"
             name="department"
@@ -114,75 +64,39 @@ const Signup = () => {
             value={user.department}
             required
           >
-            <option value="">Select Department</option>
+            <option value="">Selecciona una carrera</option>
             {departments.map((department, index) => (
-              <option key={index} value={department}>{department}</option>
+              <option key={index} value={department}>
+                {department}
+              </option>
             ))}
           </select>
         </div>
-        <div className="form-group">
-          <label className="form-label">Municipality</label>
-          <select
-            className="form-input"
-            name="municipality"
-            onChange={handleChange}
-            value={user.municipality}
-            required
-          >
-            <option value="">Select Municipality</option>
-            {municipalities.map((municipality, index) => (
-              <option key={index} value={municipality}>{municipality}</option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label className="form-label">Document Type</label>
-          <input
-            className="form-input"
-            type="text"
-            name="document_type"
-            onChange={handleChange}
-            value={user.document_type}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label">Document</label>
-          <input
-            className="form-input"
-            type="text"
-            name="document"
-            onChange={handleChange}
-            value={user.document}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label">Email</label>
-          <input
-            className="form-input"
-            type="email"
-            name="email"
-            onChange={handleChange}
-            value={user.email}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label">Password</label>
-          <input
-            className="form-input"
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={user.password}
-            required
-          />
-        </div>
-        <button className="form-button">Create account</button>
+        <input
+          className="form-input"
+          type="email"
+          name="email"
+          placeholder="Correo electrónico"
+          onChange={handleChange}
+          value={user.email}
+          required
+        />
+        <input
+          className="form-input"
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          onChange={handleChange}
+          value={user.password}
+          required
+        />
+        <button className="form-button">Crear cuenta</button>
+        <p className="form-link">
+          ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link>
+        </p>
       </form>
     </div>
   );
-}
+};
 
-export default Signup;
+export default RegisterForm;

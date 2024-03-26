@@ -1,59 +1,67 @@
 .presentation-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .section-one-presentation {
-    background-color: rgba(164, 155, 159, 0.66);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
-    margin-bottom: 20px;
-  }
-  
-  .text-section-one {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .section-two-presentation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .button-container {
-    display: flex;
-  }
-  
-  .section-two-button-one, .section-two-button-two {
-    margin: 0 10px; /* Espacio entre los botones */
-    padding: 10px 20px;
-    background-color: #007bff; /* Color de fondo del botón */
-    color: #fff; /* Color del texto */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
-  }
-  
-  .section-two-button-one:hover, .section-two-button-two:hover {
-    background-color: #0056b3; /* Cambio de color al pasar el mouse */
-  }
-  
-  .section-two-button-one img, .section-two-button-two img {
-    display: block;
-    width: 100px;
-    height: auto;
-    margin-bottom: 10px;
-  }
-  
-  .section-two-button-one span, .section-two-button-two span {
-    font-size: 18px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+  background-color: #333; /* Fondo oscuro */
+  color: #fff; /* Texto blanco */
+}
+
+.section-one-presentation {
+  max-width: 600px;
+  text-align: center;
+}
+
+.logo {
+  font-size: 4em;
+  color: #ff5722; /* Color naranja */
+}
+
+.logo-icon {
+  vertical-align: middle; /* Alineamos verticalmente el icono */
+}
+
+.section-one-presentation h1 {
+  font-size: 2.5em;
+  margin-top: 20px; /* Espacio superior */
+}
+
+.section-one-presentation p {
+  font-size: 1.2em;
+  margin-bottom: 20px; /* Espacio inferior */
+}
+
+.section-two-presentation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px; /* Espacio superior */
+}
+
+.button-container {
+  display: flex;
+}
+
+.section-two-button {
+  background-color: #ff5722; /* Color naranja */
+  color: #fff; /* Texto blanco */
+  border: none;
+  border-radius: 30px;
+  padding: 15px 30px;
+  margin: 0 10px;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center; /* Centramos los elementos verticalmente */
+}
+
+.section-two-button:hover {
+  background-color: #ff7043; /* Color naranja más claro */
+  transform: scale(1.1); /* Escala aumentada al pasar el ratón */
+}
+
+.icon {
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
