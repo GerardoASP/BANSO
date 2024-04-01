@@ -41,7 +41,7 @@ const UpdateProjectForm = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/projects/update-project/${myQueryParam}`, {
+      const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/projects/update-project/${myQueryParam}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(projectData),
