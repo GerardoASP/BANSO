@@ -2,8 +2,17 @@ import React from 'react';
 import Logo from '../../assets/images/logo_banso.png';
 import "./DashBoardPage.scss";
 import { Link } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const Dashboard = () => {
+  const logout = async () => {
+    await AsyncStorage.removeItem("access");
+    await AsyncStorage.removeItem("refresh");
+    window.location.href = "/";
+  };
+
   return (
     <div className='presentation-container'>
       <div className='section-one-presentation'>
@@ -34,6 +43,14 @@ const Dashboard = () => {
               <span>Lista proyectos</span>
             </button>
           </Link>
+          <Link to="/filter-project">
+            <button type='submit' className='section-two-button-two'>
+              <span>Filtro de proyectos</span>
+            </button>
+          </Link>
+          <button type='submit' className='section-two-button-two' onClick={logout}>
+              <span>Cerrar Sesion</span>
+            </button>
         </div>
       </div>
     </div>

@@ -10,6 +10,8 @@ import RegisterProject from './components/RegisterProject/RegisterProject'
 import UpdateProjectForm from './components/UpdateProjectForm/UpdateProjectForm';
 import UpdateUserForm from './components/UpdateUserForm/UpdateUserForm';
 import Dashboard from './pages/DashBoardPage/DashBoardPage';
+import ProjectFilter from './components/ProjectFilter/ProjectFilter';
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
           <Route path="/register-project" element={<RegisterProject />}/>
           <Route path="/update-project" element={<UpdateProjectForm />}/>
           <Route path="/update-profile" element={<UpdateUserForm />}/>
+          <Route path="/filter-project" element={<ProjectFilter />}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
         </Routes>
       </Router>

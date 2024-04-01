@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./RegisterForm.scss";
-
+import { Navigate } from "react-router-dom";
 const departments = [
   "Ingeniería de Sistemas",
   "Ingeniería Mecánica",
@@ -27,9 +27,31 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("Usuario registrado:", user);
+      const response = await fetch("https://bansobackend-production.up.railway.app/api/v1/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+        const json = await response.json();
+        setUser({
+          firstname: "",
+          lastname: "",
+          department: "",
+          municipality: "",
+          document_type: "",
+          document: "",
+          email: "",
+          password: "",
+          user_career:""
+        });
+        <Navigate to="/" />;
+      } else {
+        const json = await response.json();
+        setErrorResponse(json.body.error);
+      }
     } catch (error) {
-      console.error("Error al registrar usuario:", error);
+      console.log(error);
     }
   };
 
