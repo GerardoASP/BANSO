@@ -46,7 +46,7 @@ const register = async (req, res) => {
         let mailOptions = {
             from: process.env.EMAIL_MAILER,
             to: email,
-            subject: 'Welcome to Our Website Triptop System',
+            subject: 'Welcome to Our Website BANSO',
             html: `
         <p style="font-size: 16px; color: #333; text-align: center;">
             <b>Thank you for registering with us. We are glad to have you as part of our community.</b>
@@ -55,7 +55,7 @@ const register = async (req, res) => {
             <img src="" alt="Welcome Image" style="max-width: 100%; height: auto;">
         </p>
         <p style="font-size: 16px; color: #333; text-align: center;">
-            <a href="http://localhost:3001/VerifyAccount" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 5px;">
+            <a href="http://localhost:3001/verify-component" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 5px;">
                 Verify Your Account
             </a>
         </p>

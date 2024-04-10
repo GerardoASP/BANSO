@@ -31,6 +31,7 @@ const ProjectFilter = () => {
         projectElement.innerHTML = `
           <h3>${project.nameProject}</h3>
           <p>${project.descriptionProject}</p>
+          <p>${project.stateProject}</p>
         `;
         searchResults.appendChild(projectElement);
       });

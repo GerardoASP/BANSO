@@ -3,63 +3,76 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #333; /* Fondo oscuro */
+  background-color: #ffcc00; /* Amarillo brillante */
 }
 
 .form-container {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Efecto de relieve */
+  width: 400px;
+  background-color: #ffffff;
+  border-radius: 20px;
   padding: 40px;
-  width: 70%; /* Ajusta el ancho del formulario */
-  max-width: 400px; /* Ancho máximo del formulario */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .form-title {
-  margin-bottom: 20px;
-  color: #333;
   text-align: center;
+  margin-bottom: 30px;
+  color: #333333;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .form-input {
   width: 100%;
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #f1f1f1;
-  border: none;
+  padding: 18px;
+  margin-bottom: 25px;
+  border: 2px solid #ff9900; /* Naranja brillante */
+  border-radius: 12px;
+  font-size: 20px;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #ff6600; /* Naranja más oscuro al enfocar */
   outline: none;
-  border-radius: 5px;
-  font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
 }
 
 .form-button {
-  background-color: #ff5722; /* Color naranja */
-  color: #fff;
+  background-color: #ff6600; /* Naranja brillante */
+  color: #ffffff;
+  padding: 18px 28px;
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
+  border-radius: 12px;
   cursor: pointer;
   width: 100%;
-  transition: background-color 0.3s ease-in-out;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
 }
 
 .form-button:hover {
-  background-color: #ff7043; /* Color naranja más claro */
+  background-color: #ff3300; /* Naranja más oscuro al pasar el mouse */
 }
 
 .error-message {
-  color: red;
-  margin-top: 10px;
+  color: #ff0000; /* Rojo brillante */
+  margin-top: 20px;
+  text-align: center;
 }
 
 .form-link {
-  margin-top: 20px;
   text-align: center;
-  color: #333;
+  margin-top: 25px;
 }
 
 .form-link a {
-  color: #007bff;
+  color: #00ccff; /* Azul brillante */
   text-decoration: none;
+  font-size: 20px;
+}
+
+.form-link a:hover {
+  text-decoration: underline;
 }
