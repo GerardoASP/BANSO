@@ -1,10 +1,9 @@
 import React from 'react';
-import Logo from '../../assets/images/logo_banso.png';
-import "./DashBoardPage.scss";
+import Logo from '../../assets/images/LOGO_BANSO_AL-removebg-preview.png';
 import { Link } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import "./DashBoardPage.scss";
 
 const Dashboard = () => {
   const logout = async () => {
@@ -24,33 +23,33 @@ const Dashboard = () => {
       <div className='section-two-presentation'>
         <div className='button-container'>
           <Link to="/users">
-            <button type='submit' className='section-two-button-one'>
+            <button type='button' className='section-two-button-one'>
               <span>Lista Usuarios</span>
             </button>
           </Link>
           <Link to="/profile">
-            <button type='submit' className='section-two-button-two'>
+            <button type='button' className='section-two-button-two'>
               <span>Perfil</span>
             </button>
           </Link>
           <Link to="/register-project">
-            <button type='submit' className='section-two-button-two'>
+            <button type='button' className='section-two-button-two'>
               <span>Crear Proyecto</span>
             </button>
           </Link>
           <Link to="/projects">
-            <button type='submit' className='section-two-button-two'>
+            <button type='button' className='section-two-button-two'>
               <span>Lista proyectos</span>
             </button>
           </Link>
           <Link to="/filter-project">
-            <button type='submit' className='section-two-button-two'>
+            <button type='button' className='section-two-button-two'>
               <span>Filtro de proyectos</span>
             </button>
           </Link>
-          <button type='submit' className='section-two-button-two' onClick={logout}>
-              <span>Cerrar Sesion</span>
-            </button>
+          <button type='button' className='section-two-button-two' onClick={logout}>
+            <span>Cerrar Sesión</span>
+          </button>
         </div>
       </div>
     </div>

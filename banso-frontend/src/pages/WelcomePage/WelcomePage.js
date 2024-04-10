@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from '../../assets/images/LOGO_BANSO-removebg-preview.png';
 import { Link } from 'react-router-dom';
 import { FaUserPlus, FaSignInAlt, FaFire } from 'react-icons/fa'; // Importamos iconos de FontAwesome
 import './WelcomePage.scss';
@@ -8,7 +9,7 @@ const WelcomePage = () => {
     <div className='presentation-container'>
       <div className='section-one-presentation'>
         <div className='logo'>
-          <FaFire className='logo-icon' />
+          <img src={Logo} alt="Logo" className='logo-icon' />
         </div>
         <h1>Bienvenidos a BANSO</h1>
         <p>¡Desata tu potencial y domina el desarrollo con nosotros!</p>

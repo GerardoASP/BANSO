@@ -19,7 +19,7 @@ const UpdateProjectForm = () => {
 
   const [projectData, setProjectData] = useState({
     nameProject: "",
-    state: "",
+    stateProject: "",
     dateStart: "",
     descriptionProject: "",
   });
@@ -35,7 +35,7 @@ const UpdateProjectForm = () => {
     setErrorMessage("");
 
     // Validación del formulario
-    if (!projectData.nameProject || !projectData.state || !projectData.dateStart || !projectData.descriptionProject) {
+    if (!projectData.nameProject || !projectData.stateProject || !projectData.dateStart || !projectData.descriptionProject) {
       setErrorMessage("Por favor complete todos los campos.");
       return;
     }
@@ -51,7 +51,7 @@ const UpdateProjectForm = () => {
         const json = await response.json();
         setProjectData({
           nameProject: "",
-          state: "",
+          stateProject: "",
           dateStart: "",
           descriptionProject: ""
         });
@@ -83,11 +83,11 @@ const UpdateProjectForm = () => {
         </div>
         <div className="form-group">
           <label>Estado del Proyecto</label>
-          <select name="state" value={projectData.state} onChange={handleChange} className="form-control">
+          <select name="stateProject" value={projectData.stateProject} onChange={handleChange} className="form-control">
             <option value="">Seleccione el estado del proyecto</option>
-            {projectStates.map((state, index) => (
-              <option key={index} value={state}>
-                {state}
+            {projectStates.map((stateProject, index) => (
+              <option key={index} value={stateProject}>
+                {stateProject}
               </option>
             ))}
           </select>

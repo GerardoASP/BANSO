@@ -14,6 +14,7 @@ const RegisterForm = () => {
     firstname: "",
     lastname: "",
     department: "",
+    document:"",
     email: "",
     password: "",
   });
@@ -27,11 +28,12 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://bansobackend-production.up.railway.app/api/v1/register", {
+      const response = await fetch("http://localhost:3000/api/v1/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
       });
+
       if (response.ok) {
         const json = await response.json();
         setUser({
@@ -101,6 +103,15 @@ const RegisterForm = () => {
           placeholder="Correo electrónico"
           onChange={handleChange}
           value={user.email}
+          required
+        />
+        <input
+          className="form-input"
+          type="text"
+          name="document"
+          placeholder="Documento"
+          onChange={handleChange}
+          value={user.document}
           required
         />
         <input

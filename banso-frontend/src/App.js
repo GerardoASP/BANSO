@@ -11,6 +11,7 @@ import UpdateProjectForm from './components/UpdateProjectForm/UpdateProjectForm'
 import UpdateUserForm from './components/UpdateUserForm/UpdateUserForm';
 import Dashboard from './pages/DashBoardPage/DashBoardPage';
 import ProjectFilter from './components/ProjectFilter/ProjectFilter';
+import VerifyComponent from './components/VerifyComponent/VerifyComponent';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/update-profile" element={<UpdateUserForm />}/>
           <Route path="/filter-project" element={<ProjectFilter />}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/verify-component' element={<VerifyComponent/>}/>
         </Routes>
       </Router>
     </div>

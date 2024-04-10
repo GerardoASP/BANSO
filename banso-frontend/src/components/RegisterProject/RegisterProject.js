@@ -5,7 +5,7 @@ import './RegisterProject.scss';
 const CrearProyecto = () => {
   const [proyecto, setProyecto] = useState({
     nameProject: "",
-    state: "",
+    stateProject: "En formulación", // Valor por defecto
     dateStart: "",
     descriptionProject: "",
   });
@@ -19,32 +19,29 @@ const CrearProyecto = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //setEnviado(true);
+    setEnviado(true);
 
     // Validación del formulario
-    if (!proyecto.nameProject || !proyecto.state || !proyecto.dateStart || !proyecto.descriptionProject) {
+    if (!proyecto.nameProject || !proyecto.dateStart || !proyecto.descriptionProject) {
       setError("Por favor completa todos los campos requeridos.");
       return;
     }
 
     try {
-      // Aquí iría la lógica para enviar los datos del proyecto al servidor
-      // Por ahora, simplemente reiniciamos el estado del proyecto
       const response = await fetch("https://bansobackend-production.up.railway.app/api/v1/projects/new-project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(proyecto),
       });
-      console.log(proyecto);
+      
       if (response.ok) {
-        const json = await response.json();
         setProyecto({
           nameProject: "",
-          state: "",
+          stateProject: "En formulación",
           dateStart: "",
           descriptionProject: ""
         });
-        console.log("Felicidades Creaste un proyecto")
+        alert("¡Felicidades! Has creado un nuevo proyecto.");
       } else {
         const json = await response.json();
         setError(json.body.error);
@@ -55,10 +52,10 @@ const CrearProyecto = () => {
   };
 
   return (
-    <div className="contenedor" style={{ textAlign: 'center', marginTop: '50px' }}>
+    <div className="contenedor">
       <form onSubmit={handleSubmit} className="formulario">
         <h1 className="titulo">Crear Proyecto</h1>
-        {!!error && <div className="mensaje-error" style={{ color: 'red' }}>{error}</div>}
+        {!!error && <div className="mensaje-error">{error}</div>}
         <div className="grupo-formulario">
           <label className="etiqueta">Nombre del Proyecto *</label>
           <input
@@ -72,14 +69,18 @@ const CrearProyecto = () => {
         </div>
         <div className="grupo-formulario">
           <label className="etiqueta">Estado *</label>
-          <input
-            className={`entrada-formulario ${enviado && !proyecto.state && 'error'}`}
-            type="text"
-            name="state"
+          <select
+            className={`entrada-formulario ${enviado && !proyecto.stateProject && 'error'}`}
+            name="stateProject"
             onChange={handleChange}
-            value={proyecto.state}
+            value={proyecto.stateProject}
             required
-          />
+          >
+            <option value="En formulación">En formulación</option>
+            <option value="En proceso">En proceso</option>
+            <option value="Finalizado">Finalizado</option>
+            <option value="En revisión">En revisión</option>
+          </select>
         </div>
         <div className="grupo-formulario">
           <label className="etiqueta">Fecha de Inicio *</label>
@@ -107,5 +108,4 @@ const CrearProyecto = () => {
     </div>
   );
 }
-
 export default CrearProyecto;
