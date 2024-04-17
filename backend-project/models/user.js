@@ -14,8 +14,13 @@ const userSchema = mongoose.Schema({
     user_career: { type: String},
     userProjects: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'project'
-    }]
+        ref: 'Project'
+    }],
+    userPublications:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Publication'
+    }],
+    verifyCode: String,
 })
 
 module.exports = mongoose.model("User", userSchema);

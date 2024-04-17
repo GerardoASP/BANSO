@@ -14,7 +14,8 @@ const register = async (req, res) => {
             municipality, 
             document_type, 
             document,
-            rol
+            rol,
+            user_career
         } = req.body;
 
     if (!email) return res.status(400).send({ msg: "El email es requerido "});
@@ -25,7 +26,8 @@ const register = async (req, res) => {
     const hashPassword = bcrypt.hashSync(password, salt);
 
     //const hashPassword = await bcrypt.hash(password,salt);
-
+    const generateRandomCode = () => Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+    const verifyCode = generateRandomCode();
     const user = new User({
         firstname,
         lastname,
@@ -37,7 +39,9 @@ const register = async (req, res) => {
         email: email.toLowerCase(),
         password: hashPassword,
         rol,
-        active: false
+        active: false,
+        user_career,
+        verifyCode
     });
 
     try {
@@ -99,7 +103,7 @@ const login = async (req, res) => {
         res.status(200).send({
             access: jwt.createAccessToken(userStore),
             refresh: jwt.createRefreshToken(userStore),
-            rol: userStore.rol,
+            verifyCodeI: userStore.verifyCode,
         })
     } catch (error) {
         res.status(400).send({ msg: error.message });

@@ -1,59 +1,74 @@
-import React from 'react';
+// DashboardPage.js
+import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/images/LOGO_BANSO_AL-removebg-preview.png';
 import { Link } from 'react-router-dom';
-import { Navigate } from "react-router-dom";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FiUser, FiHome, FiSettings, FiHelpCircle, FiMail, FiCalendar, FiSearch, FiPlus, FiLogOut } from 'react-icons/fi';
 import "./DashBoardPage.scss";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Dashboard = () => {
+const DashboardPage = () => {
+  const [publications, setPublications] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/v1/publications`)
+      .then(response => response.json())
+      .then(data => setPublications(data))
+      .catch(error => console.error('Error fetching publications:', error));
+  }, []);
+
   const logout = async () => {
-    await AsyncStorage.removeItem("access");
-    await AsyncStorage.removeItem("refresh");
-    window.location.href = "/";
+    try {
+      // Borra los datos de sesión al cerrar sesión
+      await AsyncStorage.removeItem("access");
+      await AsyncStorage.removeItem("refresh");
+      await AsyncStorage.removeItem("verifyCode");
+      window.location.href = "/"; // Redirige al usuario a la página de inicio al cerrar sesión
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   };
 
   return (
-    <div className='presentation-container'>
-      <div className='section-one-presentation'>
-        <img src={Logo} alt="Logo" className='image-section-one'/>
-        <div className='text-section-one'>
-          <h1>Dashboard</h1>
+    <div className='dashboard-container'>
+      <div className='sidebar'>
+        <div className='logo-container'>
+          <img src={Logo} alt="Logo" className='logo'/>
+          <h1>BANSO</h1>
         </div>
+        <div className='nav-links'>
+          <Link to="/home" className='nav-link'><FiHome className='nav-icon'/>Inicio</Link>
+          <Link to="/profile" className='nav-link'><FiUser className='nav-icon'/>Perfil</Link>
+          <Link to="/register-project" className='nav-link'><FiPlus className='nav-icon'/>Crear Proyecto</Link>
+          <Link to="/projects" className='nav-link'><FiSearch className='nav-icon'/>Ver Proyectos</Link>
+          <Link to="/filter-project" className='nav-link'><FiSearch className='nav-icon'/>Filtrar Proyectos</Link>
+          <Link to="/help" className='nav-link'><FiHelpCircle className='nav-icon'/>Ayuda</Link>
+          <Link to="/messages" className='nav-link'><FiMail className='nav-icon'/>Mensajes</Link>
+          <Link to="/calendar" className='nav-link'><FiCalendar className='nav-icon'/>Calendario</Link>
+          <Link to="/users" className='nav-link'><FiUser className='nav-icon'/>Lista de Usuarios</Link>
+        </div>
+        <button className='logout-button' onClick={logout}><FiLogOut className='nav-icon'/>Cerrar Sesión</button>
       </div>
-      <div className='section-two-presentation'>
-        <div className='button-container'>
-          <Link to="/users">
-            <button type='button' className='section-two-button-one'>
-              <span>Lista Usuarios</span>
-            </button>
-          </Link>
-          <Link to="/profile">
-            <button type='button' className='section-two-button-two'>
-              <span>Perfil</span>
-            </button>
-          </Link>
-          <Link to="/register-project">
-            <button type='button' className='section-two-button-two'>
-              <span>Crear Proyecto</span>
-            </button>
-          </Link>
-          <Link to="/projects">
-            <button type='button' className='section-two-button-two'>
-              <span>Lista proyectos</span>
-            </button>
-          </Link>
-          <Link to="/filter-project">
-            <button type='button' className='section-two-button-two'>
-              <span>Filtro de proyectos</span>
-            </button>
-          </Link>
-          <button type='button' className='section-two-button-two' onClick={logout}>
-            <span>Cerrar Sesión</span>
-          </button>
+      <div className='main-content'>
+        <h1>Bienvenido a tu Dashboard</h1>
+        <p>Explora las opciones disponibles en el menú lateral para acceder a diferentes secciones y funcionalidades.</p>
+        <Link to="/create-publication" className='create-publication-button'>
+          <FiPlus className='create-icon' />
+        </Link>
+        <div className='projects-container'>
+          <h2>Publicaciones Recientes</h2>
+          {Array.isArray(publications) && publications.map(project => (
+            <div className='project-card' key={project.id}>
+              <img src={`https://via.placeholder.com/150?text=${project.name}`} alt={project.name} />
+              <div className='project-details'>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Dashboard;
+export default DashboardPage;

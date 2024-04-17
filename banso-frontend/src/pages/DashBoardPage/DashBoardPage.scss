@@ -1,50 +1,162 @@
-.presentation-container {
+// Variables
+$sidebar-width: 250px;
+$sidebar-hover-width: 300px;
+$sidebar-min-width: 200px;
+$sidebar-background-color: #333;
+$sidebar-text-color: #fff;
+$sidebar-hover-background-color: #a93226;
+$sidebar-transition-duration: 0.3s;
+$logo-size: 40px;
+$nav-link-padding: 10px;
+$nav-link-color: #fff;
+$nav-link-hover-transform: translateX(5px);
+$logout-button-color: #c0392b;
+$logout-button-hover-color: #a93226;
+$project-card-border-color: #ccc;
+$project-card-border-radius: 5px;
+$project-card-padding: 10px;
+$project-card-margin-bottom: 10px;
+$project-card-image-size: 100px;
+$project-card-details-flex: 1;
+
+.dashboard-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #2c3e50; /* Fondo oscuro */
-}
 
-.section-one-presentation {
-  background-color: #3498db; /* Azul */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 40px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
-  margin-bottom: 40px;
-  color: #ffffff; /* Texto blanco */
-  text-align: center;
-}
+  .sidebar {
+    width: $sidebar-width;
+    min-width: $sidebar-min-width;
+    height: 100vh;
+    background-color: $sidebar-background-color;
+    color: $sidebar-text-color;
+    padding: 20px;
+    transition: width $sidebar-transition-duration ease-in-out;
 
-.text-section-one h1 {
-  font-size: 48px; /* Tamaño de fuente más grande */
-  font-weight: bold;
-  margin-top: 20px; /* Espaciado superior */
-}
+    &:hover {
+      width: $sidebar-hover-width;
+    }
 
-.section-two-presentation {
-  display: flex;
-  flex-wrap: wrap; /* Para que los botones se ajusten automáticamente */
-  justify-content: center; /* Centra horizontalmente los botones */
-}
+    &:not(:hover) {
+      width: $sidebar-min-width;
+    }
 
-.section-two-button-one, .section-two-button-two {
-  margin: 20px; /* Espacio entre los botones */
-  padding: 20px 40px; /* Relleno más grande */
-  background-color: #2ecc71; /* Verde */
-  color: #ffffff; /* Texto blanco */
-  border: none;
-  border-radius: 10px; /* Bordes redondeados */
-  cursor: pointer;
-  font-size: 24px; /* Tamaño de fuente más grande */
-  transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
-}
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
 
-.section-two-button-one:hover, .section-two-button-two:hover {
-  background-color: #27ae60; /* Verde más oscuro al pasar el mouse */
-}
+      .logo {
+        width: $logo-size;
+        margin-right: 10px;
+      }
 
-.image-section-one{
-  height: 195px;
+      h1 {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+    }
+
+    .nav-links {
+      margin-top: 20px;
+
+      .nav-link {
+        display: block;
+        padding: $nav-link-padding;
+        color: $nav-link-color;
+        text-decoration: none;
+        transition: transform $sidebar-transition-duration ease;
+
+        &:hover {
+          transform: $nav-link-hover-transform;
+        }
+
+        .nav-icon {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .logout-button {
+      width: 100%;
+      margin-top: 20px;
+      padding: $nav-link-padding;
+      background-color: $logout-button-color;
+      color: $nav-link-color;
+      border: none;
+      border-radius: $project-card-border-radius;
+      cursor: pointer;
+      transition: background-color $sidebar-transition-duration ease;
+
+      &:hover {
+        background-color: $logout-button-hover-color;
+      }
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    padding: 20px;
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .projects-container {
+      margin-top: 20px;
+
+      .project-card {
+        display: flex;
+        border: 1px solid $project-card-border-color;
+        border-radius: $project-card-border-radius;
+        padding: $project-card-padding;
+        margin-bottom: $project-card-margin-bottom;
+
+        img {
+          width: $project-card-image-size;
+          height: $project-card-image-size;
+          border-radius: $project-card-border-radius;
+          margin-right: 20px;
+        }
+
+        .project-details {
+          flex: $project-card-details-flex;
+
+          h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: #333;
+          }
+
+          p {
+            margin-bottom: 5px;
+            color: #666;
+          }
+
+          .author {
+            font-style: italic;
+            color: #999;
+          }
+        }
+      }
+    }
+
+    .create-publication-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+      .create-icon {
+        pointer-events: none; // Deshabilita eventos de puntero en el icono
+      }
+    }
+  }
 }
