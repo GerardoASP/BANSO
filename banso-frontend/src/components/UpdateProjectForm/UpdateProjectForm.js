@@ -6,6 +6,8 @@ const projectStates = ["En formulación", "En proceso", "Finalizado", "En revisi
 const UpdateProjectForm = () => {
   const location = useLocation();
   const [myQueryParam,setMyQueryParam] = useState('');
+  const [project,setProject] = useState('');
+
   useEffect(() => {
     // Parse the query parameters from the search string
     const params = new URLSearchParams(location.search);
@@ -16,6 +18,17 @@ const UpdateProjectForm = () => {
     // Do something with the query parameter value
     console.log('My query parameter value:', myQueryParam);
   }, [location]);
+
+  useEffect(()=>{
+    const params = new URLSearchParams(location.search);
+    // Get the value of the query parameter you're interested in
+    const myQueryParam = params.get('id');
+    setMyQueryParam(myQueryParam);
+    fetch(`http://localhost:3000/api/v1/projects/${myQueryParam}`)
+      .then(response => response.json())
+      .then(data => setProject(data));
+    console.log(project.nameProject)
+  },[])
 
   const [projectData, setProjectData] = useState({
     nameProject: "",
@@ -77,14 +90,14 @@ const UpdateProjectForm = () => {
             name="nameProject"
             value={projectData.nameProject}
             onChange={handleChange}
-            placeholder="Ingrese el nombre del proyecto"
+            placeholder={project.nameProject}
             className="form-control"
           />
         </div>
         <div className="form-group">
           <label>Estado del Proyecto</label>
           <select name="stateProject" value={projectData.stateProject} onChange={handleChange} className="form-control">
-            <option value="">Seleccione el estado del proyecto</option>
+            <option value="" >{project.stateProject}</option>
             {projectStates.map((stateProject, index) => (
               <option key={index} value={stateProject}>
                 {stateProject}
@@ -102,7 +115,7 @@ const UpdateProjectForm = () => {
             name="descriptionProject"
             value={projectData.descriptionProject}
             onChange={handleChange}
-            placeholder="Ingrese la descripción del proyecto"
+            placeholder={project.descriptionProject}
             className="form-control"
           ></textarea>
         </div>

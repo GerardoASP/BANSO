@@ -17,6 +17,7 @@ const RegisterForm = () => {
     document:"",
     email: "",
     password: "",
+    user_career:""
   });
   const [errorResponse, setErrorResponse] = useState("");
 
@@ -83,9 +84,9 @@ const RegisterForm = () => {
         <div className="select-container">
           <select
             className="form-input"
-            name="department"
+            name="user_career"
             onChange={handleChange}
-            value={user.department}
+            value={user.user_career}
             required
           >
             <option value="">Selecciona una carrera</option>
