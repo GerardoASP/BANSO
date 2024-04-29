@@ -8,6 +8,10 @@ const CrearProyecto = () => {
     stateProject: "En formulación", // Valor por defecto
     dateStart: "",
     descriptionProject: "",
+    projectSubjects:[],
+    linkFrontendRepository: "",
+    linkBackendRepository: "",
+    linkGeneralRepository: "",
   });
   const [error, setError] = useState("");
   const [enviado, setEnviado] = useState(false);
@@ -28,7 +32,7 @@ const CrearProyecto = () => {
     }
 
     try {
-      const response = await fetch("https://bansobackend-production.up.railway.app/api/v1/projects/new-project", {
+      const response = await fetch("http://localhost:3000/api/v1/projects/new-project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(proyecto),
@@ -39,7 +43,11 @@ const CrearProyecto = () => {
           nameProject: "",
           stateProject: "En formulación",
           dateStart: "",
-          descriptionProject: ""
+          descriptionProject: "",
+          projectSubjects:[],
+          linkFrontendRepository: "",
+          linkBackendRepository: "",
+          linkGeneralRepository: "",
         });
         alert("¡Felicidades! Has creado un nuevo proyecto.");
       } else {
@@ -102,6 +110,39 @@ const CrearProyecto = () => {
             value={proyecto.descriptionProject}
             required
           ></textarea>
+        </div>
+        <div className="grupo-formulario">
+          <label className="etiqueta">Link Repositorio 1(General) </label>
+          <input
+            className={`entrada-formulario ${enviado && !proyecto.linkGeneralRepository && 'error'}`}
+            type="text"
+            name="linkGeneralRepository"
+            onChange={handleChange}
+            value={proyecto.linkGeneralRepository}
+            required
+          />
+        </div>
+        <div className="grupo-formulario">
+          <label className="etiqueta">Link Repositorio 2(Frontend) *</label>
+          <input
+            className={`entrada-formulario ${enviado && !proyecto.linkFrontendRepository && 'error'}`}
+            type="text"
+            name="linkFrontendRepository"
+            onChange={handleChange}
+            value={proyecto.linkFrontendRepository}
+            required
+          />
+        </div>
+        <div className="grupo-formulario">
+          <label className="etiqueta">Link Repositorio 3(Backend) *</label>
+          <input
+            className={`entrada-formulario ${enviado && !proyecto.linkBackendRepository && 'error'}`}
+            type="text"
+            name="linkBackendRepository"
+            onChange={handleChange}
+            value={proyecto.linkBackendRepository}
+            required
+          />
         </div>
         <button className="boton-formulario">Crear Proyecto</button>
       </form>
