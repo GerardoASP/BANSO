@@ -12,6 +12,55 @@
     color: #333;
   }
 
+  .buscar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    input {
+      flex: 1;
+      height: 40px;
+      padding: 0 20px;
+      font-size: 16px;
+      color: #222;
+      outline: none;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      transition: width 0.3s;
+
+      &:focus {
+        width: 240px;
+      }
+    }
+
+    .btn {
+      width: 40px;
+      height: 40px;
+      background-color: #007bff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      .icon {
+        color: #fff;
+        font-size: 20px;
+        transition: color 0.3s;
+      }
+
+      &:hover {
+        background-color: #0056b3;
+
+        .icon {
+          color: #fff;
+        }
+      }
+    }
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;

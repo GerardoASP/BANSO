@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchIcon from '@mui/icons-material/Search';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import './ListProjectPage.scss';
 
 const ListProjectPage = () => {
   // Definir el estado para almacenar la lista de proyectos
   const [projects, setProjects] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [projectsPerPage] = useState(5); // Define la cantidad de proyectos por página
 
@@ -16,6 +19,17 @@ const ListProjectPage = () => {
       .then(response => response.json())
       .then(data => setProjects(data));
   }, []);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reiniciar la página actual al buscar
+  };
+
+  const filteredProjects = projects.filter(project => {
+    return project.nameProject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           project.descriptionProject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           project.stateProject.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   const UpdateFormProject = (_id) => {
     console.log('Di click en UpdateFormProject');
@@ -44,15 +58,30 @@ const ListProjectPage = () => {
     }
   }
 
+  const handleButtonClick = (github_url) => {
+    window.open(`${github_url}`, '_blank');
+  };
+
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+  const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className='projects-view'>
       <h2>Lista de Proyectos</h2>
+      <div className="buscar">
+        <input 
+          type="text" 
+          placeholder="Buscar" 
+          value={searchTerm}
+          onChange={handleSearch} 
+        />
+        <div className="btn">
+          <SearchIcon className="icon" />
+        </div>
+      </div>
       <table>
         <thead>
           <tr>
@@ -76,6 +105,15 @@ const ListProjectPage = () => {
                   <IconButton onClick={() => handleDelete(project._id)}>
                     <DeleteIcon />
                   </IconButton>
+                  <IconButton>
+                    <GitHubIcon onClick={()=>handleButtonClick(project.linkGeneralRepository)} />
+                  </IconButton>
+                  <IconButton>
+                    <GitHubIcon onClick={()=>handleButtonClick(project.linkFrontendRepository)}/>
+                  </IconButton>
+                  <IconButton>
+                    <GitHubIcon onClick={()=>handleButtonClick(project.linkBackendRepository)}/>
+                  </IconButton>
                 </td>
               </tr>
             ))
@@ -88,9 +126,9 @@ const ListProjectPage = () => {
       </table>
       {/* Paginación */}
       <div className="pagination">
-        {projects.length > projectsPerPage && (
+        {filteredProjects.length > projectsPerPage && (
           <ul>
-            {Array.from({ length: Math.ceil(projects.length / projectsPerPage) }).map((_, index) => (
+            {Array.from({ length: Math.ceil(filteredProjects.length / projectsPerPage) }).map((_, index) => (
               <li key={index}>
                 <button onClick={() => paginate(index + 1)}>{index + 1}</button>
               </li>

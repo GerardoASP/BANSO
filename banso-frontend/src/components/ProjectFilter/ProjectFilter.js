@@ -12,7 +12,7 @@ const ProjectFilter = () => {
 
       if (searchTerm !== '') {
         try {
-          const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/projects/search-project/subject/${searchTerm}`);
+          const response = await fetch(`http://localhost:3000/api/v1/projects/search-project/state/${searchTerm}`);
           console.log(response)
           const projects = await response.json();
           renderProjects(projects);

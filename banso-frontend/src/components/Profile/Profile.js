@@ -35,6 +35,12 @@ const Profile = () => {
           userId: jsonData._id,
           email:jsonData.email 
         }));
+        // Aquí establecemos el autor en el estado de publicación
+        setUserData(prevState => ({
+          ...prevState,
+          userId: jsonData._id // Asegúrate de que jsonData tenga el formato esperado
+        }));
+        //console.log(userData)
       } catch (error) {
         console.error('Error fetching data2:', error);
       }
@@ -144,7 +150,7 @@ useEffect(()=>{
       <div className="profile-projects">
         <h3>Publicaciones</h3>
         <div className="projects-container">
-          {publications.map(project => (
+          {Array.isArray(publications) && publications.map(project => (
             <div className="project-card" key={project._id}>
               <img src={project.image} />
               <h4>{project.title}</h4>

@@ -192,6 +192,45 @@ const getPublicationsOfUser = async (req, res) => {
   }
 };
 
+const getPublicationsOfUserByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    // Buscamos el usuario en la base de datos utilizando su email
+    const user = await modelUser.findOne(email);
+
+    // Verificamos si el usuario existe
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Obtenemos los IDs de los proyectos asociados al usuario
+    const publicationIds = user.userPublications.map(id => mongoose.Types.ObjectId(id));
+    console.log(publicationIds)
+
+    // Verificamos que haya IDs de publicaciones
+    if (!publicationIds || publicationIds.length === 0) {
+      return res.status(404).json({ message: "No publications found for this user" });
+    }
+
+    // Buscamos los proyectos en la base de datos utilizando los IDs
+    const publications = await modelPublication.find({ _id: { $in: publicationIds } });
+
+    console.log("Publications found:", publications);
+    // Verificamos si se encontraron publicaciones
+    if (!publications || publications.length === 0) {
+      return res.status(404).json({ message: "No publications found for the given IDs" });
+    }
+
+    // Retornamos las publicaciones encontradas
+    res.status(200).json(publications);
+  } catch (error) {
+    // Manejamos errores
+    console.error("Error fetching user publications:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 /*Obtener un usuario en especifico por el codigo de verificacion*/
 const getUserByVerifyCode = async (req, res) => {
   const importantCode = req.params.verifyCode;
@@ -216,5 +255,6 @@ module.exports = {
   addProject,
   getProjectsOfUser,
   getUserByVerifyCode,
-  getPublicationsOfUser
+  getPublicationsOfUser,
+  getPublicationsOfUserByEmail
 }

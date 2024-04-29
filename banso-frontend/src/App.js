@@ -12,6 +12,7 @@ import UpdateUserForm from './components/UpdateUserForm/UpdateUserForm';
 import Dashboard from './pages/DashBoardPage/DashBoardPage';
 import ProjectFilter from './components/ProjectFilter/ProjectFilter';
 import VerifyComponent from './components/VerifyComponent/VerifyComponent';
+import RegisterPublication from './components/RegisterPublication/RegisterPublication';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/filter-project" element={<ProjectFilter />}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/verify-component' element={<VerifyComponent/>}/>
+          <Route path='/register-publication' element={<RegisterPublication/>}/>
         </Routes>
       </Router>
     </div>

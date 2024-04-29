@@ -36,11 +36,12 @@ const DashboardPage = () => {
           <h1>BANSO</h1>
         </div>
         <div className='nav-links'>
-          <Link to="/home" className='nav-link'><FiHome className='nav-icon'/>Inicio</Link>
+          <Link to="/dashboard" className='nav-link'><FiHome className='nav-icon'/>Inicio</Link>
           <Link to="/profile" className='nav-link'><FiUser className='nav-icon'/>Perfil</Link>
           <Link to="/register-project" className='nav-link'><FiPlus className='nav-icon'/>Crear Proyecto</Link>
           <Link to="/projects" className='nav-link'><FiSearch className='nav-icon'/>Ver Proyectos</Link>
           <Link to="/filter-project" className='nav-link'><FiSearch className='nav-icon'/>Filtrar Proyectos</Link>
+          <Link to="/register-publication" className='nav-link'><FiPlus className='nav-icon'/>Crear Publicacion</Link>
           <Link to="/help" className='nav-link'><FiHelpCircle className='nav-icon'/>Ayuda</Link>
           <Link to="/messages" className='nav-link'><FiMail className='nav-icon'/>Mensajes</Link>
           <Link to="/calendar" className='nav-link'><FiCalendar className='nav-icon'/>Calendario</Link>
@@ -57,14 +58,15 @@ const DashboardPage = () => {
         <div className='projects-container'>
           <h2>Publicaciones Recientes</h2>
           {Array.isArray(publications) && publications.map(project => (
-            <div className='project-card' key={project.id}>
-              <img src={`https://via.placeholder.com/150?text=${project.name}`} alt={project.name} />
-              <div className='project-details'>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-              </div>
-            </div>
-          ))}
+    <div className='project-card' key={project.id}>
+        <img src={`https://via.placeholder.com/150?text=${project.name}`} alt={project.name} />
+        <div className='project-details'>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+            <p>{"Para más información enviar mensaje a : " + project.contact}</p>
+        </div>
+    </div>
+))}
         </div>
       </div>
     </div>
