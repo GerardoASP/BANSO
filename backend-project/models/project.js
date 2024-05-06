@@ -9,9 +9,7 @@ const projectSchema = mongoose.Schema({
         ref: 'user'
     }],
     projectSubjects:{type:[String]},
-    linkFrontendRepository:{type:String},
-    linkBackendRepository:{type:String},
-    linkGeneralRepository:{type:String},
+    linkGeneralRepository:{type:String}
 })
 
 module.exports = mongoose.model("Project", projectSchema);

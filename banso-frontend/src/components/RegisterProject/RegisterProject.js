@@ -9,8 +9,6 @@ const CrearProyecto = () => {
     dateStart: "",
     descriptionProject: "",
     projectSubjects:[],
-    linkFrontendRepository: "",
-    linkBackendRepository: "",
     linkGeneralRepository: "",
   });
   const [error, setError] = useState("");
@@ -45,9 +43,7 @@ const CrearProyecto = () => {
           dateStart: "",
           descriptionProject: "",
           projectSubjects:[],
-          linkFrontendRepository: "",
-          linkBackendRepository: "",
-          linkGeneralRepository: "",
+          linkFrontendRepository: ""
         });
         alert("¡Felicidades! Has creado un nuevo proyecto.");
       } else {
@@ -112,36 +108,13 @@ const CrearProyecto = () => {
           ></textarea>
         </div>
         <div className="grupo-formulario">
-          <label className="etiqueta">Link Repositorio 1(General) </label>
+          <label className="etiqueta">Link Repositorio 1(General) *</label>
           <input
             className={`entrada-formulario ${enviado && !proyecto.linkGeneralRepository && 'error'}`}
             type="text"
             name="linkGeneralRepository"
             onChange={handleChange}
             value={proyecto.linkGeneralRepository}
-            required
-          />
-        </div>
-        <div className="grupo-formulario">
-          <label className="etiqueta">Link Repositorio 2(Frontend) *</label>
-          <input
-            className={`entrada-formulario ${enviado && !proyecto.linkFrontendRepository && 'error'}`}
-            type="text"
-            name="linkFrontendRepository"
-            onChange={handleChange}
-            value={proyecto.linkFrontendRepository}
-            required
-          />
-        </div>
-        <div className="grupo-formulario">
-          <label className="etiqueta">Link Repositorio 3(Backend) *</label>
-          <input
-            className={`entrada-formulario ${enviado && !proyecto.linkBackendRepository && 'error'}`}
-            type="text"
-            name="linkBackendRepository"
-            onChange={handleChange}
-            value={proyecto.linkBackendRepository}
-            required
           />
         </div>
         <button className="boton-formulario">Crear Proyecto</button>

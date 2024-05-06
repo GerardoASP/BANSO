@@ -40,7 +40,6 @@ const DashboardPage = () => {
           <Link to="/profile" className='nav-link'><FiUser className='nav-icon'/>Perfil</Link>
           <Link to="/register-project" className='nav-link'><FiPlus className='nav-icon'/>Crear Proyecto</Link>
           <Link to="/projects" className='nav-link'><FiSearch className='nav-icon'/>Ver Proyectos</Link>
-          <Link to="/filter-project" className='nav-link'><FiSearch className='nav-icon'/>Filtrar Proyectos</Link>
           <Link to="/register-publication" className='nav-link'><FiPlus className='nav-icon'/>Crear Publicacion</Link>
           <Link to="/help" className='nav-link'><FiHelpCircle className='nav-icon'/>Ayuda</Link>
           <Link to="/messages" className='nav-link'><FiMail className='nav-icon'/>Mensajes</Link>

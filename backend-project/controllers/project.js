@@ -48,9 +48,9 @@ const getProject = async (req, res) => {
 /*Actualizar un proyecto */
 const updateProject = async (req,res)=>{
   const { id } = req.params;
-  const { nameProject,stateProject,dateStart,descriptionProject,projectUsers,projectSubjects,linkFrontendRepository,linkBackendRepository,linkGeneralRepository } = req.body;
+  const { nameProject,stateProject,dateStart,descriptionProject,projectUsers,projectSubjects,linkGeneralRepository } = req.body;
   try {
-    const project = await modelProject.findByIdAndUpdate(id, { nameProject,stateProject,dateStart,descriptionProject,projectUsers,projectSubjects,linkFrontendRepository,linkBackendRepository,linkGeneralRepository }, { new: true });
+    const project = await modelProject.findByIdAndUpdate(id, { nameProject,stateProject,dateStart,descriptionProject,projectUsers,projectSubjects,linkGeneralRepository }, { new: true });
     res.status(200).send(project);
   } catch (error) {
     console.error(error);

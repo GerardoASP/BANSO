@@ -153,7 +153,7 @@ const getProjectsOfUser = async (req, res) => {
   }
 }
 
-const getPublicationsOfUser = async (req, res) => {
+/* const getPublicationsOfUser = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -190,15 +190,13 @@ const getPublicationsOfUser = async (req, res) => {
     console.error("Error fetching user publications:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-};
+}; */
 
-const getPublicationsOfUserByEmail = async (req, res) => {
+const getPublicationsOfUserVerifyCode = async (req, res) => {
+  const verifyCode = req.params.verifyCode;
   try {
-    const { email } = req.params;
-
     // Buscamos el usuario en la base de datos utilizando su email
-    const user = await modelUser.findOne(email);
-
+    const user = await modelUser.findOne({ verifyCode: verifyCode });
     // Verificamos si el usuario existe
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -255,6 +253,5 @@ module.exports = {
   addProject,
   getProjectsOfUser,
   getUserByVerifyCode,
-  getPublicationsOfUser,
-  getPublicationsOfUserByEmail
+  getPublicationsOfUserVerifyCode
 }

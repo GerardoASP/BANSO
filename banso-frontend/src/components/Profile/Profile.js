@@ -18,10 +18,9 @@ const Profile = () => {
       { id: 2, name: 'Proyecto 2', description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: 'https://via.placeholder.com/150' },
       { id: 3, name: 'Proyecto 3', description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', image: 'https://via.placeholder.com/150' }
     ],
-    userId:'661c7d435ebd82d99d238c1b',
+    userId:'',
   });
   const [publications,setPublications] = useState([]);
-
   useEffect(()=>{
     const fetchDataUserByType = async () => {
       try {
@@ -57,9 +56,15 @@ const Profile = () => {
 },[]);
 
 useEffect(()=>{
-  fetch(`http://localhost:3000/api/v1/users/${userData.userId}/publications`)
+  try{
+    const verifyCode = localStorage.getItem('verifyCode');
+    fetch(`http://localhost:3000/api/v1/users/${verifyCode}/publications`)
     .then(response => response.json())
     .then(data => setPublications(data));
+  }catch(error){
+    console.log(error)
+  }
+  
 },[])
 
   const handleChange = (e) => {
