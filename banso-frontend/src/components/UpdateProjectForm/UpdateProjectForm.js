@@ -24,10 +24,9 @@ const UpdateProjectForm = () => {
     // Get the value of the query parameter you're interested in
     const myQueryParam = params.get('id');
     setMyQueryParam(myQueryParam);
-    fetch(`http://localhost:3000/api/v1/projects/${myQueryParam}`)
+    fetch(`https://bansobackend-production.up.railway.app/api/v1/projects/${myQueryParam}`)
       .then(response => response.json())
-      .then(data => setProject(data));
-    console.log(project.nameProject)
+      .then(data => setProject(data))
   },[])
 
   const [projectData, setProjectData] = useState({
@@ -35,8 +34,6 @@ const UpdateProjectForm = () => {
     stateProject: "",
     dateStart: "",
     descriptionProject: "",
-    linkFrontendRepository: "",
-    linkBackendRepository: "",
     linkGeneralRepository: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
@@ -57,7 +54,7 @@ const UpdateProjectForm = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/projects/update-project/${myQueryParam}`, {
+      const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/projects/update-project/${myQueryParam}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(projectData),
@@ -70,8 +67,6 @@ const UpdateProjectForm = () => {
           stateProject: "",
           dateStart: "",
           descriptionProject: "",
-          linkFrontendRepository: "",
-          linkBackendRepository: "",
           linkGeneralRepository: "",
         });
         console.log("Felicidades, has actualizado un proyecto.");
@@ -133,28 +128,6 @@ const UpdateProjectForm = () => {
             value={projectData.linkGeneralRepository}
             onChange={handleChange}
             placeholder={project.linkGeneralRepository}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label>Link Repositorio 2(Backend)</label>
-          <input
-            type="text"
-            name="linkBackendRepository"
-            value={projectData.linkBackendRepository}
-            onChange={handleChange}
-            placeholder={project.linkBackendRepository}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label>Link Repositorio 3(Frontend)</label>
-          <input
-            type="text"
-            name="linkFrontendRepository"
-            value={projectData.linkFrontendRepository}
-            onChange={handleChange}
-            placeholder={project.linkFrontendRepository}
             className="form-control"
           />
         </div>

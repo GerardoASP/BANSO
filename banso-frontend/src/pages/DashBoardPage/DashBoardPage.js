@@ -10,7 +10,7 @@ const DashboardPage = () => {
   const [publications, setPublications] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/v1/publications`)
+    fetch(`https://bansobackend-production.up.railway.app/api/v1/publications`)
       .then(response => response.json())
       .then(data => setPublications(data))
       .catch(error => console.error('Error fetching publications:', error));

@@ -56,7 +56,7 @@ const ListProjectPage = () => {
 
   async function handleDelete(_id) {
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/projects/${_id}`, {
+      const response = await fetch(`https://bansobackend-production.up.railway.app//api/v1/projects/${_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
       });
