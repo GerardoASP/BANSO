@@ -30,7 +30,7 @@ const CrearProyecto = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/projects/new-project", {
+      const response = await fetch("https://bansobackend-production.up.railway.app/api/v1/projects/new-project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(proyecto),

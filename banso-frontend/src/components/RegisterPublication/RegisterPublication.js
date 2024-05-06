@@ -17,7 +17,7 @@ const RegisterPublication = () => {
     const fetchDataUserByType = async () => {
       try {
         const verifyCode = localStorage.getItem('verifyCode');
-        const response = await fetch(`http://localhost:3000/api/v1/users/get-user-by-verify-code/${verifyCode}`);
+        const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/users/get-user-by-verify-code/${verifyCode}`);
         const jsonData = await response.json();
         setUserData(jsonData);
         
@@ -56,7 +56,7 @@ const [publication, setPublication] = useState({
 
     try {
         console.log(publication)
-      const response = await fetch(`http://localhost:3000/api/v1/publications/new-publication`, {
+      const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/publications/new-publication`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(publication),
