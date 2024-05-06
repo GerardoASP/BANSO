@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IconButton } from '@mui/material';
+import { Box, Button, IconButton, Modal } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
@@ -12,6 +12,18 @@ const ListProjectPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [projectsPerPage] = useState(5); // Define la cantidad de proyectos por página
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const style2 = {
+    top: '50%',
+    left: '50%',
+    transform: 'translate(200%, 50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   // Simular una llamada a una API para obtener los proyectos
   useEffect(() => {
@@ -59,7 +71,12 @@ const ListProjectPage = () => {
   }
 
   const handleButtonClick = (github_url) => {
-    window.open(`${github_url}`, '_blank');
+    if (github_url) {
+      window.open(`${github_url}`, '_blank');
+    } else {
+      // Si el enlace es nulo, establecer el estado para mostrar el modal
+      setModalVisible(true);
+    }
   };
 
   const indexOfLastProject = currentPage * projectsPerPage;
@@ -108,12 +125,6 @@ const ListProjectPage = () => {
                   <IconButton>
                     <GitHubIcon onClick={()=>handleButtonClick(project.linkGeneralRepository)} />
                   </IconButton>
-                  <IconButton>
-                    <GitHubIcon onClick={()=>handleButtonClick(project.linkFrontendRepository)}/>
-                  </IconButton>
-                  <IconButton>
-                    <GitHubIcon onClick={()=>handleButtonClick(project.linkBackendRepository)}/>
-                  </IconButton>
                 </td>
               </tr>
             ))
@@ -136,6 +147,18 @@ const ListProjectPage = () => {
           </ul>
         )}
       </div>
+      {/* Modal */}
+      {modalVisible && (
+        <Modal open={modalVisible} onClose={() => setModalVisible(false)} aria-labelledby="child-modal-title" aria-describedby="child-modal-description">
+          <Box sx={{ ...style2, width: 200 }}>
+            <h2 id="child-modal-title">Lo sentimos</h2>
+            <p id="child-modal-description">
+              No hay repositorio registrado para este proyecto
+            </p>
+            <Button onClick={() => setModalVisible(false)}>Cerrar</Button>
+          </Box>
+        </Modal>
+      )}
     </div>
   );
 }
