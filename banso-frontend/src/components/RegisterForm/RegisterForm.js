@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import "./RegisterForm.scss";
-import { Navigate } from "react-router-dom";
+
 const departments = [
   "Ingeniería de Sistemas",
   "Ingeniería Mecánica",
@@ -9,52 +12,81 @@ const departments = [
   "Ingeniería Industrial",
 ];
 
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #ff0000', // Rojo brillante
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '12px',
+};
+
 const RegisterForm = () => {
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
     department: "",
-    document:"",
+    document: "",
     email: "",
     password: "",
-    user_career:""
+    user_career: ""
   });
   const [errorResponse, setErrorResponse] = useState("");
+  const [documentError, setDocumentError] = useState("");
+  const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+
+    if (name === "document") {
+      if (/^[0-9]*$/.test(value) && value.length <= 10) {
+        setUser({ ...user, [name]: value });
+        setDocumentError("");
+        setOpen(false);
+      } else {
+        setDocumentError("El documento debe contener solo números y no más de 10 dígitos.");
+        setOpen(true);
+      }
+    } else {
+      setUser({ ...user, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch("https://bansobackend-production.up.railway.app/api/v1/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
-
-      if (response.ok) {
-        const json = await response.json();
-        setUser({
-          firstname: "",
-          lastname: "",
-          department: "",
-          municipality: "",
-          document_type: "",
-          document: "",
-          email: "",
-          password: "",
-          user_career:""
+    if (!documentError) {
+      try {
+        const response = await fetch("http://localhost:3002/api/v1/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(user),
         });
-        <Navigate to="/" />;
-      } else {
-        const json = await response.json();
-        setErrorResponse(json.body.error);
+
+        if (response.ok) {
+          const json = await response.json();
+          setUser({
+            firstname: "",
+            lastname: "",
+            department: "",
+            municipality: "",
+            document_type: "",
+            document: "",
+            email: "",
+            password: "",
+            user_career: ""
+          });
+          <Navigate to="/" />;
+        } else {
+          const json = await response.json();
+          setErrorResponse(json.body.error);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -98,21 +130,21 @@ const RegisterForm = () => {
           </select>
         </div>
         <input
+          className={`form-input ${documentError ? 'error-border' : ''}`}
+          type="text"
+          name="document"
+          placeholder="Documento"
+          onChange={handleChange}
+          value={user.document}
+          required
+        />
+        <input
           className="form-input"
           type="email"
           name="email"
           placeholder="Correo electrónico"
           onChange={handleChange}
           value={user.email}
-          required
-        />
-        <input
-          className="form-input"
-          type="text"
-          name="document"
-          placeholder="Documento"
-          onChange={handleChange}
-          value={user.document}
           required
         />
         <input
@@ -129,6 +161,22 @@ const RegisterForm = () => {
           ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link>
         </p>
       </form>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Error de Documento
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {documentError}
+          </Typography>
+          <button className="close-button" onClick={() => setOpen(false)}>Cerrar</button>
+        </Box>
+      </Modal>
     </div>
   );
 };

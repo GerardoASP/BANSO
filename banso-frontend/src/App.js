@@ -13,6 +13,8 @@ import Dashboard from './pages/DashBoardPage/DashBoardPage';
 import ProjectFilter from './components/ProjectFilter/ProjectFilter';
 import VerifyComponent from './components/VerifyComponent/VerifyComponent';
 import RegisterPublication from './components/RegisterPublication/RegisterPublication';
+import ListMyProjects from './pages/ListMyProjects/ListMyProjects';
+import UpdatePublication from './components/UpdatePublication/UpdatePublication';
 
 
 function App() {
@@ -24,10 +26,12 @@ function App() {
           <Route path="/profile" element={<ProfilePage />}/>
           <Route path="/users" element={<ListUserPage />}/>
           <Route path="/projects" element={<ListProjectPage />}/>
+          <Route path="/myprojects" element={<ListMyProjects />}/>
           <Route path="/register" element={<RegisterForm />}/>
           <Route path="/login" element={<LoginForm />}/>
           <Route path="/register-project" element={<RegisterProject />}/>
           <Route path="/update-project" element={<UpdateProjectForm />}/>
+          <Route path="/update-publication" element={<UpdatePublication />}/>
           <Route path="/update-profile" element={<UpdateUserForm />}/>
           <Route path="/filter-project" element={<ProjectFilter />}/>
           <Route path='/dashboard' element={<Dashboard/>}/>

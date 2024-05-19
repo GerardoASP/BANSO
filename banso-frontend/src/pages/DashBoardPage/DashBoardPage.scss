@@ -1,162 +1,222 @@
-// Variables
-$sidebar-width: 250px;
-$sidebar-hover-width: 300px;
-$sidebar-min-width: 200px;
-$sidebar-background-color: #333;
-$sidebar-text-color: #fff;
-$sidebar-hover-background-color: #a93226;
-$sidebar-transition-duration: 0.3s;
-$logo-size: 40px;
-$nav-link-padding: 10px;
-$nav-link-color: #fff;
-$nav-link-hover-transform: translateX(5px);
-$logout-button-color: #c0392b;
-$logout-button-hover-color: #a93226;
-$project-card-border-color: #ccc;
-$project-card-border-radius: 5px;
-$project-card-padding: 10px;
-$project-card-margin-bottom: 10px;
-$project-card-image-size: 100px;
-$project-card-details-flex: 1;
+// Variables de colores
+$primary-color: #007bff;
+$secondary-color: #6a0dad;
+$background-color: #f9f9f9;
+$text-color: #333;
+$sidebar-width: 300px;
+$main-content-margin: 40px;
 
+// Estilos generales
 .dashboard-container {
+  position: relative;
+  min-height: 100vh;
+  background-color: $background-color;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  width: $sidebar-width;
+  background-color: #fff;
+  color: $text-color;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  overflow-y: auto;
+  transition: transform 0.5s ease;
+  transform: translateX(0);
+}
+
+.sidebar.hidden {
+  transform: translateX(-$sidebar-width);
+}
+
+.logo-container {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
 
-  .sidebar {
-    width: $sidebar-width;
-    min-width: $sidebar-min-width;
-    height: 100vh;
-    background-color: $sidebar-background-color;
-    color: $sidebar-text-color;
-    padding: 20px;
-    transition: width $sidebar-transition-duration ease-in-out;
+.logo {
+  width: 80px;
+  margin-right: 10px;
+}
 
-    &:hover {
-      width: $sidebar-hover-width;
-    }
+h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: $primary-color;
+}
 
-    &:not(:hover) {
-      width: $sidebar-min-width;
-    }
+.nav-links {
+  margin-top: 40px;
+}
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
+.nav-link {
+  display: block;
+  padding: 15px 20px;
+  color: $text-color;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
-      .logo {
-        width: $logo-size;
-        margin-right: 10px;
-      }
+  &:hover {
+    background-color: $primary-color;
+    color: #fff;
+  }
+}
 
-      h1 {
-        font-size: 1.5rem;
-        margin: 0;
-      }
-    }
+.logout-button {
+  width: calc(100% - 40px);
+  margin: 20px auto;
+  padding: 15px;
+  background-color: $secondary-color;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-    .nav-links {
-      margin-top: 20px;
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
+}
 
-      .nav-link {
-        display: block;
-        padding: $nav-link-padding;
-        color: $nav-link-color;
-        text-decoration: none;
-        transition: transform $sidebar-transition-duration ease;
+.main-content {
+  margin-left: $sidebar-width + $main-content-margin;
+  padding: 40px;
+  text-align: center;
+  transition: margin-left 0.5s ease;
+}
 
-        &:hover {
-          transform: $nav-link-hover-transform;
-        }
+.projects-container {
+  margin-top: 60px;
+  text-align: center;
+  position: relative;
+}
 
-        .nav-icon {
-          margin-right: 10px;
-        }
-      }
-    }
+.project-carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  margin-bottom: 40px;
+}
 
-    .logout-button {
-      width: 100%;
-      margin-top: 20px;
-      padding: $nav-link-padding;
-      background-color: $logout-button-color;
-      color: $nav-link-color;
-      border: none;
-      border-radius: $project-card-border-radius;
-      cursor: pointer;
-      transition: background-color $sidebar-transition-duration ease;
+.project-card {
+  flex: 0 0 auto;
+  width: 280px;
+  margin-right: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
-      &:hover {
-        background-color: $logout-button-hover-color;
-      }
-    }
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   }
 
-  .main-content {
-    flex: 1;
-    padding: 20px;
+  img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
 
-    h1 {
-      margin-bottom: 20px;
-    }
+  h3 {
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
 
-    .projects-container {
-      margin-top: 20px;
+  p {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 0.9rem;
+  }
+}
 
-      .project-card {
-        display: flex;
-        border: 1px solid $project-card-border-color;
-        border-radius: $project-card-border-radius;
-        padding: $project-card-padding;
-        margin-bottom: $project-card-margin-bottom;
+.social-section {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
 
-        img {
-          width: $project-card-image-size;
-          height: $project-card-image-size;
-          border-radius: $project-card-border-radius;
-          margin-right: 20px;
-        }
+.social-icon {
+  display: block;
+  font-size: 1.5rem;
+  color: $primary-color;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
 
-        .project-details {
-          flex: $project-card-details-flex;
+  &:hover {
+    transform: scale(1.2);
+  }
+}
 
-          h3 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            color: #333;
-          }
+.prev-button, .next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  color: $primary-color;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  z-index: 100;
 
-          p {
-            margin-bottom: 5px;
-            color: #666;
-          }
+  &:hover {
+    background-color: $primary-color;
+    color: #fff;
+    transform: scale(1.1);
+  }
+}
 
-          .author {
-            font-style: italic;
-            color: #999;
-          }
-        }
-      }
-    }
+.prev-button {
+  left: -20px;
+}
 
-    .create-publication-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #007bff;
-      color: #fff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.5rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.next-button {
+  right: -20px;
+}
 
-      .create-icon {
-        pointer-events: none; // Deshabilita eventos de puntero en el icono
-      }
-    }
+.arrow-icon {
+  font-size: 1.5rem;
+}
+
+.floating-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-publication-button, .create-project-button {
+  background-color: $primary-color;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
   }
 }

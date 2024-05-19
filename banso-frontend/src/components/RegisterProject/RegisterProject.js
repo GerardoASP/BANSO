@@ -1,13 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import './RegisterProject.scss';
 
 const CrearProyecto = () => {
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const fetchDataUserByType = async () => {
+      try {
+        const verifyCode = localStorage.getItem('verifyCode');
+        const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/users/get-user-by-verify-code/${verifyCode}`);
+        const jsonData = await response.json();
+        setUserData(jsonData);
+
+        // Aquí establecemos el autor en el estado de publicación
+        setProyecto(prevState => ({
+          ...prevState,
+          projectUser: jsonData._id // Asegúrate de que jsonData tenga el formato esperado
+        }));
+      } catch (error) {
+        console.error('Error fetching data2:', error);
+      }
+    };
+    fetchDataUserByType();
+    const intervalId = setInterval(fetchDataUserByType, 1000);
+    return () => clearInterval(intervalId);
+  }, []); 
+
+
   const [proyecto, setProyecto] = useState({
     nameProject: "",
     stateProject: "En formulación", // Valor por defecto
     dateStart: "",
     descriptionProject: "",
+    projectUser:"",
     projectSubjects:[],
     linkGeneralRepository: "",
   });
@@ -28,9 +54,9 @@ const CrearProyecto = () => {
       setError("Por favor completa todos los campos requeridos.");
       return;
     }
-
+    console.log(proyecto)
     try {
-      const response = await fetch("https://bansobackend-production.up.railway.app/api/v1/projects/new-project", {
+      const response = await fetch("http://localhost:3002/api/v1/projects/new-project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(proyecto),
@@ -42,6 +68,7 @@ const CrearProyecto = () => {
           stateProject: "En formulación",
           dateStart: "",
           descriptionProject: "",
+          projectUser:`${userData._id}`,
           projectSubjects:[],
           linkFrontendRepository: ""
         });

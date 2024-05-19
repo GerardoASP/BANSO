@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { FaEdit, FaSave, FaCamera, FaWhatsapp } from 'react-icons/fa';
 import { MdEmail, MdPhone, MdKeyboardBackspace } from 'react-icons/md';
 import './Profile.scss';
-
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 const Profile = () => {
   const [editing, setEditing] = useState(false);
   const [userData, setUserData] = useState({
@@ -25,7 +26,7 @@ const Profile = () => {
     const fetchDataUserByType = async () => {
       try {
 	      const verifyCode = localStorage.getItem('verifyCode');
-        const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/users/get-user-by-verify-code/${verifyCode}`);
+        const response = await fetch(`http://localhost:3002/api/v1/users/get-user-by-verify-code/${verifyCode}`);
         const jsonData = await response.json();
         setUserData(prevData => ({
           ...prevData,
@@ -58,7 +59,7 @@ const Profile = () => {
 useEffect(()=>{
   try{
     const verifyCode = localStorage.getItem('verifyCode');
-    fetch(`https://bansobackend-production.up.railway.app/api/v1/users/${verifyCode}/publications`)
+    fetch(`http://localhost:3002/api/v1/users/${verifyCode}/publications`)
     .then(response => response.json())
     .then(data => setPublications(data));
   }catch(error){
@@ -99,6 +100,10 @@ useEffect(()=>{
   const handleWhatsappClick = () => {
     console.log('Abrir WhatsApp');
   };
+
+  const handleUpdate = (_id) => {
+    window.location.href = `/update-publication?id=${_id}`;
+  }
 
   return (
     <div className="profile-container">
@@ -160,6 +165,9 @@ useEffect(()=>{
               <img src={project.image} />
               <h4>{project.title}</h4>
               <p>{project.description}</p>
+              <IconButton onClick={() => handleUpdate(project._id)}>
+                <EditIcon />
+              </IconButton>
             </div>
           ))}
         </div>

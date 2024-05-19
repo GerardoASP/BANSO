@@ -22,7 +22,7 @@ const VerifyComponent = () => {
         }
 
         try {
-            const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/users/get-user-by-email/${userData.email}`, {
+            const response = await fetch(`http://localhost:3002/api/v1/users/get-user-by-email/${userData.email}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const VerifyComponent = () => {
                 }
 
                 try {
-                    await fetch(`https://bansobackend-production.up.railway.app/api/v1/users/update-user/${data._id}`, {
+                    await fetch(`http://localhost:3002/api/v1/users/update-user/${data._id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

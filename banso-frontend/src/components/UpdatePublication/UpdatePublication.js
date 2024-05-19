@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./UpdateProjectForm.scss";
-import { useLocation } from "react-router-dom";
-import { Modal, Typography, Button, Box } from "@mui/material";
-
-const projectStates = ["En formulación", "En proceso", "Finalizado", "En revisión"];
-
-const UpdateProjectForm = () => {
+import { Box, Button, Modal, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
+import './UpdatePublication.scss';
+const UpdatePublication = () => {
   const [userData, setUserData] = useState({});
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [enviado, setEnviado] = useState(false);
 
   useEffect(() => {
     const fetchDataUserByType = async () => {
@@ -18,9 +17,9 @@ const UpdateProjectForm = () => {
         setUserData(jsonData);
 
         // Aquí establecemos el autor en el estado de publicación
-        setProjectData(prevState => ({
+        setPublicationData(prevState => ({
           ...prevState,
-          projectUser: jsonData._id // Asegúrate de que jsonData tenga el formato esperado
+          author: jsonData._id // Asegúrate de que jsonData tenga el formato esperado
         }));
       } catch (error) {
         console.error('Error fetching data2:', error);
@@ -31,10 +30,9 @@ const UpdateProjectForm = () => {
     return () => clearInterval(intervalId);
   }, []); 
 
-
   const location = useLocation();
   const [myQueryParam,setMyQueryParam] = useState('');
-  const [project,setProject] = useState('');
+  const [publication,setPublication] = useState('');
 
   useEffect(() => {
     // Parse the query parameters from the search string
@@ -52,24 +50,24 @@ const UpdateProjectForm = () => {
     // Get the value of the query parameter you're interested in
     const myQueryParam = params.get('id');
     setMyQueryParam(myQueryParam);
-    fetch(`http://localhost:3002/api/v1/projects/${myQueryParam}`)
+    fetch(`http://localhost:3002/api/v1/publications/${myQueryParam}`)
       .then(response => response.json())
-      .then(data => setProject(data))
+      .then(data => setPublication(data))
   },[])
 
-  const [projectData, setProjectData] = useState({
-    nameProject: "",
-    stateProject: "",
-    dateStart: "",
-    descriptionProject: "",
-    projectUser:"",
-    linkGeneralRepository: "",
+  const [publicationData, setPublicationData] = useState({
+    title: "",
+    description: "",
+    author: "",
+    observations: "",
+    contact: "",
   });
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProjectData({ ...projectData, [name]: value });
+    setPublicationData({ ...publicationData, [name]: value });
   };
 
   async function handleSubmit(e) {
@@ -77,29 +75,28 @@ const UpdateProjectForm = () => {
     setErrorMessage("");
 
     // Validación del formulario
-    if (!projectData.nameProject || !projectData.stateProject || !projectData.dateStart || !projectData.descriptionProject) {
+    if (!publicationData.title || !publicationData.description || !publicationData.contact) {
       setErrorMessage("Por favor complete todos los campos.");
       return;
     }
 
     try {
-      const response = await fetch(`http://localhost:3002/api/v1/projects/update-project/${myQueryParam}`, {
+      const response = await fetch(`http://localhost:3002/api/v1/publications/update-publication/${myQueryParam}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(projectData),
+        body: JSON.stringify(publicationData),
       });
       
       if (response.ok) {
         const json = await response.json();
-        setProjectData({
-          nameProject: "",
-          stateProject: "",
-          dateStart: "",
-          descriptionProject: "",
-          projectUser:`${userData._id}`,
-          linkGeneralRepository: "",
+        setPublicationData({
+          title: "",
+          description: "",
+          author:`${userData._id}`,
+          observations: "",
+          contact: "",
         });
-        console.log("Felicidades, has actualizado un proyecto.");
+        console.log("Felicidades, has actualizado una publicacion.");
         setSuccessModalOpen(true);
       } else {
         const json = await response.json();
@@ -115,58 +112,46 @@ const UpdateProjectForm = () => {
   };
 
   return (
-    <div className="project-form-container">
-      <form onSubmit={handleSubmit} className="project-form">
-        <h2>Actualización de Proyecto</h2>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
-        <div className="form-group">
-          <label>Nombre del Proyecto</label>
+    <div className="contenedor">
+      <form onSubmit={handleSubmit} className="formulario">
+        <h1 className="titulo">Actualización de Publicación</h1>
+        {!!error && <div className="mensaje-error">{error}</div>}
+        <div className="grupo-formulario">
+          <label className="etiqueta">Nombre de la publicación *</label>
           <input
+            className={`entrada-formulario ${enviado && !publication.title && 'error'}`}
             type="text"
-            name="nameProject"
-            value={projectData.nameProject}
+            name="title"
             onChange={handleChange}
-            placeholder={project.nameProject}
-            className="form-control"
+            value={publicationData.title}
+            placeholder={publication.title}
+            required
           />
         </div>
-        <div className="form-group">
-          <label>Estado del Proyecto</label>
-          <select name="stateProject" value={projectData.stateProject} onChange={handleChange} className="form-control">
-            <option value="" >{project.stateProject}</option>
-            {projectStates.map((stateProject, index) => (
-              <option key={index} value={stateProject}>
-                {stateProject}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label>Fecha de Inicio</label>
-          <input type="date" name="dateStart" value={projectData.dateStart} onChange={handleChange} className="form-control" />
-        </div>
-        <div className="form-group">
-          <label>Descripción del Proyecto</label>
+        <div className="grupo-formulario">
+          <label className="etiqueta">Descripción *</label>
           <textarea
-            name="descriptionProject"
-            value={projectData.descriptionProject}
+            className={`entrada-formulario ${enviado && !publication.description && 'error'}`}
+            name="description"
             onChange={handleChange}
-            placeholder={project.descriptionProject}
-            className="form-control"
+            value={publicationData.description}
+            placeholder={publication.description}
+            required
           ></textarea>
         </div>
-        <div className="form-group">
-          <label>Link Repositorio 1(General)</label>
+        <div className="grupo-formulario">
+          <label className="etiqueta">Contacto </label>
           <input
+            className={`entrada-formulario ${enviado && !publication.contact && 'error'}`}
             type="text"
-            name="linkGeneralRepository"
-            value={projectData.linkGeneralRepository}
+            name="contact"
             onChange={handleChange}
-            placeholder={project.linkGeneralRepository}
-            className="form-control"
+            value={publicationData.contact}
+            placeholder={publication.contact}
+            required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Actualizar Proyecto</button>
+        <button className="boton-formulario">Actualizar Publicación</button>
       </form>
       <Modal
         open={successModalOpen}
@@ -180,15 +165,15 @@ const UpdateProjectForm = () => {
           ¡Felicidades!
         </Typography>
         <Typography variant="body1" id="modal-description">
-          Has actualizado tu proyecto exitosamente.
+          Has actualizado tu publicación exitosamente.
         </Typography>
         <Button onClick={handleCloseSuccessModal} variant="contained" color="primary" style={{ marginTop: '20px' }}>
           Cerrar
         </Button>
       </Box>
     </Modal>
-  </div>
-);
-};
+    </div>
+  )
+}
 
-export default UpdateProjectForm;
+export default UpdatePublication

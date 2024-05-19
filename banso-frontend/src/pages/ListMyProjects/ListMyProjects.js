@@ -4,9 +4,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import './ListProjectPage.scss';
+import './ListMyProjects.scss';
 
-const ListProjectPage = () => {
+const ListMyProjects = () => {
+  const [userData, setUserData] = useState({});
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,10 +15,28 @@ const ListProjectPage = () => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/v1/projects')
+    const fetchDataUserByType = async () => {
+      try {
+        const verifyCode = localStorage.getItem('verifyCode');
+        const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/users/get-user-by-verify-code/${verifyCode}`);
+        const jsonData = await response.json();
+        setUserData(jsonData);
+
+      } catch (error) {
+        console.error('Error fetching data2:', error);
+      }
+    };
+    fetchDataUserByType();
+    const intervalId = setInterval(fetchDataUserByType, 1000);
+    return () => clearInterval(intervalId);
+  }, []); 
+
+  useEffect(() => {
+    const verifyCode = localStorage.getItem('verifyCode');
+    fetch(`http://localhost:3002/api/v1/users/${verifyCode}/projects`)
       .then(response => response.json())
       .then(data => setProjects(data));
-  }, []);
+  }, [userData]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -35,10 +54,12 @@ const ListProjectPage = () => {
   }
 
   const handleDelete = async (_id) => {
+    const verifyCode = localStorage.getItem('verifyCode');
     try {
       const response = await fetch(`http://localhost:3002/api/v1/projects/${_id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
+        body:JSON.stringify({"userVerifyCode":verifyCode})
       });
       if (response.status === 204) {
         setProjects(projects.filter(project => project._id !== _id));
@@ -72,7 +93,7 @@ const ListProjectPage = () => {
 
   return (
     <div className='projects-view'>
-      <Typography variant="h2" style={{ marginBottom: '20px' }}>Lista de Proyectos</Typography>
+      <Typography variant="h2" style={{ marginBottom: '20px' }}>Lista de Mis Proyectos</Typography>
       <Box className="search-container" style={{ marginBottom: '20px' }}>
         <input 
           type="text" 
@@ -102,6 +123,12 @@ const ListProjectPage = () => {
                 <td>{project.descriptionProject}</td>
                 <td>{project.stateProject}</td>
                 <td>
+                  <IconButton onClick={() => handleUpdate(project._id)}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleDelete(project._id)}>
+                    <DeleteIcon />
+                  </IconButton>
                   <IconButton>
                     <GitHubIcon onClick={()=>handleButtonClick(project.linkGeneralRepository)} />
                   </IconButton>
@@ -134,7 +161,7 @@ const ListProjectPage = () => {
       >
         <Box className="alert-modal" style={{ padding: '20px', background: '#fff', borderRadius: '10px', width: '300px', margin: 'auto', marginTop: '100px' }}>
           <Typography variant="h5" id="modal-title" gutterBottom>
-            Repositorio no disponible/invalido
+            Repositorio no disponible
           </Typography>
           <Typography variant="body1" id="modal-description">
             No se encontró un repositorio registrado para este proyecto.
@@ -148,4 +175,4 @@ const ListProjectPage = () => {
   );
 }
 
-export default ListProjectPage;
+export default ListMyProjects;

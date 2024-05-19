@@ -18,8 +18,6 @@ router.put("/update-project/:id", projectController.updateProject);
 router.get("/:id", projectController.getProject);
 
 //URL'S Adicionales
-/* http://localhost:3000/api/v1/projects/addUserToProject */
-router.put("/addUserToProject", projectController.addUser);
 
 /* http://localhost:3000/api/v1/projects/1/users */
 router.get('/:id/users', projectController.getUsersOfProject);
@@ -29,5 +27,7 @@ router.get("/search-project/subject/:subject",projectController.getProjectsBySub
 
 /* http://localhost:3000/api/v1/projects/search-project/state/POO */
 router.get("/search-project/state/:state",projectController.getProjectsByState);
+
+
 
 module.exports = router;
