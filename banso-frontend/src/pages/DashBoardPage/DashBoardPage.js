@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiUser, FiHome, FiHelpCircle, FiSearch, FiPlus, FiLogOut, FiChevronLeft, FiChevronRight, FiInstagram, FiFacebook, FiX } from 'react-icons/fi';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import "./DashBoardPage.scss";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const DashboardPage = () => {
   const [publications, setPublications] = useState([]);
@@ -20,9 +20,9 @@ const DashboardPage = () => {
 
   const logout = async () => {
     try {
-      await AsyncStorage.removeItem("access");
-      await AsyncStorage.removeItem("refresh");
-      await AsyncStorage.removeItem("verifyCode");
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("verifyCode");
       window.location.href = "/"; 
     } catch (error) {
       console.error('Error al cerrar sesión:', error);

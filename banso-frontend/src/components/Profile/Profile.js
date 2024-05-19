@@ -26,7 +26,7 @@ const Profile = () => {
     const fetchDataUserByType = async () => {
       try {
 	      const verifyCode = localStorage.getItem('verifyCode');
-        const response = await fetch(`http://localhost:3002/api/v1/users/get-user-by-verify-code/${verifyCode}`);
+        const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/users/get-user-by-verify-code/${verifyCode}`);
         const jsonData = await response.json();
         setUserData(prevData => ({
           ...prevData,
@@ -59,7 +59,7 @@ const Profile = () => {
 useEffect(()=>{
   try{
     const verifyCode = localStorage.getItem('verifyCode');
-    fetch(`http://localhost:3002/api/v1/users/${verifyCode}/publications`)
+    fetch(`https://bansobackend-production.up.railway.app/api/v1/users/${verifyCode}/publications`)
     .then(response => response.json())
     .then(data => setPublications(data));
   }catch(error){

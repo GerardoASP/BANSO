@@ -50,7 +50,7 @@ const UpdatePublication = () => {
     // Get the value of the query parameter you're interested in
     const myQueryParam = params.get('id');
     setMyQueryParam(myQueryParam);
-    fetch(`http://localhost:3002/api/v1/publications/${myQueryParam}`)
+    fetch(`https://bansobackend-production.up.railway.app/api/v1/publications/${myQueryParam}`)
       .then(response => response.json())
       .then(data => setPublication(data))
   },[])
@@ -81,7 +81,7 @@ const UpdatePublication = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3002/api/v1/publications/update-publication/${myQueryParam}`, {
+      const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/publications/update-publication/${myQueryParam}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(publicationData),
