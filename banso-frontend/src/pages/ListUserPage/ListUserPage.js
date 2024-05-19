@@ -9,7 +9,7 @@ const ListUserPage = () => {
   
   // Simular una llamada a una API para obtener los usuarios
   useEffect(() => {
-    fetch('http://localhost:3002/api/v1/users')
+    fetch('https://bansobackend-production.up.railway.app/api/v1/users')
       .then(response => response.json())
       .then(data => setUsers(data));
   }, []);

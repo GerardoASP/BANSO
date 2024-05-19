@@ -52,7 +52,7 @@ const UpdateProjectForm = () => {
     // Get the value of the query parameter you're interested in
     const myQueryParam = params.get('id');
     setMyQueryParam(myQueryParam);
-    fetch(`http://localhost:3002/api/v1/projects/${myQueryParam}`)
+    fetch(`https://bansobackend-production.up.railway.app/api/v1/projects/${myQueryParam}`)
       .then(response => response.json())
       .then(data => setProject(data))
   },[])
@@ -83,7 +83,7 @@ const UpdateProjectForm = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3002/api/v1/projects/update-project/${myQueryParam}`, {
+      const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/projects/update-project/${myQueryParam}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(projectData),

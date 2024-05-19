@@ -33,7 +33,7 @@ const ListMyProjects = () => {
 
   useEffect(() => {
     const verifyCode = localStorage.getItem('verifyCode');
-    fetch(`http://localhost:3002/api/v1/users/${verifyCode}/projects`)
+    fetch(`https://bansobackend-production.up.railway.app/api/v1/users/${verifyCode}/projects`)
       .then(response => response.json())
       .then(data => setProjects(data));
   }, [userData]);
@@ -56,7 +56,7 @@ const ListMyProjects = () => {
   const handleDelete = async (_id) => {
     const verifyCode = localStorage.getItem('verifyCode');
     try {
-      const response = await fetch(`http://localhost:3002/api/v1/projects/${_id}`, {
+      const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/projects/${_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body:JSON.stringify({"userVerifyCode":verifyCode})

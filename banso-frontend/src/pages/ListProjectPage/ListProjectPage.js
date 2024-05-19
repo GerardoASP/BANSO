@@ -14,7 +14,7 @@ const ListProjectPage = () => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/v1/projects')
+    fetch('https://bansobackend-production.up.railway.app/api/v1/projects')
       .then(response => response.json())
       .then(data => setProjects(data));
   }, []);
@@ -36,7 +36,7 @@ const ListProjectPage = () => {
 
   const handleDelete = async (_id) => {
     try {
-      const response = await fetch(`http://localhost:3002/api/v1/projects/${_id}`, {
+      const response = await fetch(`https://bansobackend-production.up.railway.app/api/v1/projects/${_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
       });
