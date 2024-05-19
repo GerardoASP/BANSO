@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../assets/images/LOGO_BANSO-removebg-preview.png';
+import Logo from '../../assets/images/LOGO_BANSO_v2_amarillo-removebg-preview.png';
 import { Link } from 'react-router-dom';
 import { FaUserPlus, FaSignInAlt, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'; // Importamos iconos de FontAwesome
 import './WelcomePage.scss';
